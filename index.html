@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobLess - Global AI Job Marketplace & Resume Builder</title>
+    <title>JobLess - Global AI Job Marketplace & Free AI Resume Builder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -12,7 +12,7 @@
     <!-- Top Security Notice -->
     <div class="bg-red-600 text-white text-xs md:text-sm py-2 px-4 text-center font-medium flex items-center justify-center space-x-2 shadow-inner">
         <i class="fa-solid fa-triangle-exclamation"></i>
-        <span><strong>SECURITY WARNING:</strong> JobLess & AI Resume Builder are 100% FREE. Never pay placement fees or cash to anyone.</span>
+        <span><strong>SECURITY WARNING:</strong> JobLess & AI Resume Builder are 100% FREE for Applicants. Never pay fees.</span>
     </div>
 
     <!-- Navbar -->
@@ -53,8 +53,9 @@
     <!-- Main Workspace Grid -->
     <main id="feed" class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        <!-- Left Column: AI Resume Builder Section -->
+        <!-- Left Column: AI Resume Builder & AdSense Slot -->
         <div class="space-y-6">
+            <!-- Free AI Resume Builder -->
             <div id="resumeBuilder" class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
                 <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-file-pen text-indigo-600 mr-2"></i> Free AI Resume Builder</h3>
                 <p class="text-xs text-slate-600 dark:text-slate-400">Fill in your details below and let AI format and generate your professional resume instantly.</p>
@@ -80,11 +81,12 @@
                 </div>
             </div>
 
-            <!-- Universal Portal Crawler Box -->
-            <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-3">
-                <h3 class="font-bold text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-globe text-indigo-600 mr-2"></i> Crawl & List Hiring Portals</h3>
-                <input type="text" id="portalUrlInput" placeholder="e.g., linkedin.com, indeed.com" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none">
-                <button onclick="syncUniversalPortal()" class="w-full bg-indigo-600 text-white text-xs font-semibold py-2.5 rounded-xl hover:bg-indigo-700 transition">AI Crawl & List Openings</button>
+            <!-- Google AdSense / Banner Slot -->
+            <div class="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-slate-900 dark:to-slate-800 p-5 rounded-2xl border border-amber-200 dark:border-slate-700 text-center space-y-2 shadow-sm">
+                <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest bg-amber-100 dark:bg-slate-800 px-2 py-0.5 rounded">Sponsored Ad / AdSense Space</span>
+                <h4 class="font-bold text-slate-800 dark:text-white text-sm">Global Warehousing & Logistics Academy</h4>
+                <p class="text-xs text-slate-600 dark:text-slate-300">Get certified for international reach trucks and high-reach forklifts.</p>
+                <button class="bg-amber-500 text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-amber-600 transition">Learn More</button>
             </div>
         </div>
 
@@ -127,7 +129,7 @@
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 py-10 mt-16 text-center text-sm border-t border-slate-800">
-        <p>&copy; 2026 JobLess Global AI Job Marketplace & Resume Builder. 100% Free Platform.</p>
+        <p>&copy; 2026 JobLess Global AI Job Marketplace & Resume Builder. 100% Free Platform for Job Seekers.</p>
     </footer>
 
     <!-- JavaScript -->
@@ -168,7 +170,6 @@
                 });
                 let result = await response.json();
                 
-                // Format resume text for download
                 let resumeContent = `=== PROFESSIONAL RESUME ===\nName: ${result.resume_data.name}\nTarget: ${result.resume_data.title}\n\nSummary:\n${result.resume_data.summary}\n\nExperience:\n${result.resume_data.experience}\n\nSkills:\n${result.resume_data.skills.join(', ')}`;
                 
                 let blob = new Blob([resumeContent], { type: 'text/plain' });
@@ -216,9 +217,11 @@
                 return;
             }
             jobs.forEach(job => {
-                let badge = job.verified 
-                    ? `<span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center"><i class="fa-solid fa-check text-[9px] mr-1"></i> Verified</span>`
-                    : `<span class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded-full">Community Employer</span>`;
+                let badge = job.is_sponsored 
+                    ? `<span class="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center"><i class="fa-solid fa-star text-[9px] mr-1"></i> Sponsored Employer</span>`
+                    : (job.verified 
+                        ? `<span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center"><i class="fa-solid fa-check text-[9px] mr-1"></i> Verified</span>`
+                        : `<span class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded-full">Community Employer</span>`);
                 
                 container.innerHTML += `
                     <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
@@ -272,26 +275,6 @@
                 alert(result.message + "\n(Application submitted for " + jobTitle + " at " + company + ")");
             } catch (error) {
                 alert('Error communicating with FastAPI server.');
-            }
-        }
-
-        async function syncUniversalPortal() {
-            let portalUrl = document.getElementById('portalUrlInput').value;
-            if (!portalUrl) { alert('Palihug isulod ang link sa portal.'); return; }
-            let role = prompt("Unsang klase sa trabaho ang i-crawl?", "High Reach Forklift Operator");
-            if (!role) return;
-
-            try {
-                let response = await fetch('https://jobless-ai-1.onrender.com/api/sync-universal-portal', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ portal_url: portalUrl, search_role: role })
-                });
-                let result = await response.json();
-                alert(result.message);
-                fetchJobs();
-            } catch (error) {
-                alert('May depekto sa pagkonekta sa AI server.');
             }
         }
 
