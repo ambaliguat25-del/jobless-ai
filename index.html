@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobLess - Global AI Job Marketplace & Free AI Resume Builder</title>
+    <title>JobLess - Global AI Job Marketplace & Visual Resume Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -18,7 +18,7 @@
     <!-- Top Security Notice -->
     <div class="bg-red-600 text-white text-xs md:text-sm py-2 px-4 text-center font-medium flex items-center justify-center space-x-2 shadow-inner">
         <i class="fa-solid fa-triangle-exclamation"></i>
-        <span><strong>SECURITY WARNING:</strong> JobLess & AI Resume Builder are 100% FREE for Applicants. Never pay placement fees.</span>
+        <span><strong>SECURITY WARNING:</strong> Resumes are view-only for verified employers. 100% Free for Applicants. Never pay fees.</span>
     </div>
 
     <!-- Navbar -->
@@ -27,12 +27,12 @@
             <div class="flex items-center space-x-2">
                 <i class="fa-solid fa-briefcase text-2xl text-indigo-400"></i>
                 <span class="text-xl font-extrabold tracking-wider">JobLess</span>
-                <span class="text-xs bg-indigo-600 px-2 py-0.5 rounded text-indigo-200">Global AI Bridge</span>
+                <span class="text-xs bg-indigo-600 px-2 py-0.5 rounded text-indigo-200">AI Visual Studio</span>
             </div>
             <div class="hidden md:flex space-x-6 text-sm font-medium items-center">
                 <a href="#" class="hover:text-indigo-400">Home</a>
                 <a href="#feed" class="hover:text-indigo-400">Job Feed</a>
-                <a href="#resumeBuilder" class="hover:text-indigo-400">AI Resume Builder</a>
+                <a href="#resumeStudio" class="hover:text-indigo-400">AI Resume Studio</a>
                 <button type="button" onclick="openAdminModal()" class="text-amber-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-lock mr-1"></i> Admin Portal</button>
                 <button type="button" onclick="toggleDarkMode()" class="bg-slate-800 p-2 rounded-xl text-yellow-400 hover:bg-slate-700 transition cursor-pointer" title="Toggle Dark/Light Mode">
                     <i id="darkModeIcon" class="fa-solid fa-moon"></i>
@@ -50,72 +50,111 @@
     <!-- Hero Section -->
     <section class="bg-gradient-to-r from-indigo-900 via-slate-900 to-indigo-950 text-white py-16 px-4 text-center">
         <div class="max-w-4xl mx-auto space-y-6">
-            <span class="bg-indigo-800/80 text-indigo-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-indigo-600">100% Free Worldwide Bridge & AI Tool</span>
-            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Create Professional Resumes & Browse Global Jobs with AI</h1>
-            <p class="text-slate-300 text-lg max-w-2xl mx-auto">Build your optimized resume for free using AI templates, browse verified listings, like/comment posts, and apply with a single click.</p>
+            <span class="bg-indigo-800/80 text-indigo-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-indigo-600">Secure Online View-Only Profile Studio</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Create Professional Visual Resumes & Connect with Global Employers</h1>
+            <p class="text-slate-300 text-lg max-w-2xl mx-auto">Build an editable, high-end digital resume with camera photo capture and AI assistance. Safe from unauthorized downloads!</p>
         </div>
     </section>
 
     <!-- Main Workspace Grid -->
     <main id="feed" class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        <!-- Left Column: AI Resume Builder with Templates, Portal Crawler, & AdSense -->
+        <!-- Left Column: AI Resume Studio & Camera / AI Assistant -->
         <div class="space-y-6">
-            <!-- Free AI Resume Builder & Templates -->
-            <div id="resumeBuilder" class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
-                <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-file-pen text-indigo-600 mr-2"></i> Free AI Resume Builder & Templates</h3>
-                <p class="text-xs text-slate-600 dark:text-slate-400">Choose your template style and fill in your details to generate a professional resume instantly.</p>
+            <!-- Visual Resume Studio Form -->
+            <div id="resumeStudio" class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
+                <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-id-card text-indigo-600 mr-2"></i> Visual Resume Builder</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-400">Punoa ang mga detalye aron ma-generate ang hapsay nga profile para sa mga employer.</p>
                 
                 <div class="space-y-3">
                     <div>
-                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Select Resume Template</label>
-                        <select id="resumeTemplateStyle" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
-                            <option value="modern_two_column">Modern Two-Column Layout (Burgundy Sidebar Style)</option>
-                            <option value="professional_clean">Professional Clean Minimalist</option>
-                            <option value="executive_bold">Bold Executive Format</option>
-                        </select>
+                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Porma sa Litrato / Camera Photo</label>
+                        <div class="flex items-center space-x-2 mt-1">
+                            <input type="file" id="profilePhotoInput" accept="image/*" class="w-full text-xs bg-slate-100 dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
+                        </div>
                     </div>
                     <div>
                         <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Full Name</label>
-                        <input type="text" id="builderName" placeholder="e.g., Aproniano Mark Baliguat" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                        <input type="text" id="rName" placeholder="Aproniano Mark Baliguat" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
                     </div>
                     <div>
-                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Target Job / Position</label>
-                        <input type="text" id="builderTargetJob" placeholder="e.g., High Reach Forklift Operator" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Target Position / Job</label>
+                        <input type="text" id="rTarget" placeholder="High Reach Forklift Operator" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">School / Educ</label>
+                            <input type="text" id="rSchool" placeholder="High School Graduate" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">City / Location</label>
+                            <input type="text" id="rCity" placeholder="Christchurch, NZ" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                        </div>
                     </div>
                     <div>
-                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Work Experience Summary</label>
-                        <textarea id="builderExp" rows="3" placeholder="e.g., Operated Jungheinrich ETR 335D reach trucks..." class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1"></textarea>
+                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Email & Phone</label>
+                        <input type="text" id="rContact" placeholder="email@gmail.com | +64..." class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
                     </div>
                     <div>
-                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Skills & Certifications</label>
-                        <input type="text" id="builderSkills" placeholder="e.g., Forklift NC II, Reach Truck, Safety Compliant" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Work Experience & Skills</label>
+                        <textarea id="rExp" rows="2" placeholder="Operated Jungheinrich ETR 335D reach trucks..." class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1"></textarea>
                     </div>
-                    <button type="button" onclick="generateAIResume()" class="w-full bg-indigo-600 text-white text-sm font-bold py-3.5 rounded-xl hover:bg-indigo-700 transition shadow-md cursor-pointer">Generate & Download Template</button>
+                    <button type="button" onclick="previewVisualResume()" class="w-full bg-indigo-600 text-white text-xs font-bold py-3 rounded-xl hover:bg-indigo-700 transition shadow-sm cursor-pointer">Save & View Online Profile</button>
                 </div>
             </div>
 
-            <!-- Universal Portal Crawler (Jobsite Link Crawler) -->
+            <!-- AI Assistant Chat Box -->
             <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-3">
-                <h3 class="font-bold text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-globe text-indigo-600 mr-2"></i> Crawl & List Hiring Portals</h3>
-                <p class="text-xs text-slate-600 dark:text-slate-400">Paste any legit job portal link to crawl open listings into your feed.</p>
-                <div class="space-y-2">
-                    <input type="text" id="portalUrlInput" placeholder="e.g., linkedin.com, indeed.com" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none">
-                    <button type="button" onclick="syncUniversalPortal()" class="w-full bg-indigo-600 text-white text-sm font-semibold py-3.5 rounded-xl hover:bg-indigo-700 transition shadow-md cursor-pointer">AI Crawl & List Openings</button>
-                </div>
-            </div>
-
-            <!-- Google AdSense / Banner Slot -->
-            <div class="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-slate-900 dark:to-slate-800 p-5 rounded-2xl border border-amber-200 dark:border-slate-700 text-center space-y-2 shadow-sm">
-                <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest bg-amber-100 dark:bg-slate-800 px-2 py-0.5 rounded">Sponsored Ad / AdSense Space</span>
-                <h4 class="font-bold text-slate-800 dark:text-white text-sm">Global Warehousing & Logistics Academy</h4>
-                <p class="text-xs text-slate-600 dark:text-slate-300">Get certified for international reach trucks and high-reach forklifts.</p>
-                <button type="button" class="bg-amber-500 text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-amber-600 transition cursor-pointer">Learn More</button>
+                <h3 class="font-bold text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-robot text-indigo-600 mr-2"></i> AI Assistant Guidance</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-400">Pangutana sa AI kon unsay angay ibutang sa imong resume.</p>
+                <input type="text" id="aiQuestionInput" placeholder="Pananglitan: Unsaon nako pag-highlight akong forklift experience?" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none">
+                <button type="button" onclick="askAIAssistant()" class="w-full bg-slate-800 text-white text-xs font-semibold py-2.5 rounded-xl hover:bg-slate-700 transition cursor-pointer">Ask AI Assistant</button>
+                <p id="aiReplyBox" class="text-[11px] text-indigo-600 dark:text-indigo-400 italic mt-1"></p>
             </div>
         </div>
 
-        <!-- Center Column: Job Feed with Real-time Search & Filter -->
+        <!-- Center Column: Job Feed & Interactive Two-Column Resume Preview -->
         <div class="lg:col-span-2 space-y-6">
+            
+            <!-- Live View-Only Resume Preview Box (Burgundy Two-Column Style) -->
+            <div id="resumePreviewCard" class="bg-white dark:bg-slate-900 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden hidden">
+                <div class="bg-rose-900 text-white p-4 text-xs font-bold flex justify-between items-center">
+                    <span><i class="fa-solid fa-eye mr-1"></i> SECURE EMPLOYER VIEW-ONLY RESUME (No Download)</span>
+                    <span class="bg-rose-800 px-2 py-0.5 rounded text-[10px]">Verified Profile</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3">
+                    <!-- Left Sidebar (Burgundy style like image) -->
+                    <div class="bg-rose-950 text-white p-6 space-y-4 flex flex-col items-center text-center">
+                        <div id="previewPhotoContainer" class="w-24 h-24 bg-slate-300 rounded-full overflow-hidden border-2 border-white shadow">
+                            <img id="prevImg" src="https://via.placeholder.com/150" class="w-full h-full object-cover">
+                        </div>
+                        <h3 id="prevName" class="text-lg font-extrabold tracking-wide">Your Name</h3>
+                        <div class="w-full text-left space-y-2 text-xs pt-4 border-t border-rose-900">
+                            <p><strong>Target:</strong> <span id="prevTarget">Position</span></p>
+                            <p><strong>School:</strong> <span id="prevSchool">School</span></p>
+                            <p><strong>Location:</strong> <span id="prevCity">City</span></p>
+                            <p><strong>Contact:</strong> <span id="prevContact">Email/Phone</span></p>
+                        </div>
+                    </div>
+                    <!-- Right Content (Details) -->
+                    <div class="md:col-span-2 p-6 space-y-4 text-xs">
+                        <div>
+                            <h4 class="font-bold text-rose-900 dark:text-rose-400 uppercase tracking-wider border-b pb-1 mb-2"><i class="fa-solid fa-graduation-cap mr-1"></i> Education & Background</h4>
+                            <p id="prevEduText" class="text-slate-700 dark:text-slate-300">High School Graduate • Safety Certified</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-rose-900 dark:text-rose-400 uppercase tracking-wider border-b pb-1 mb-2"><i class="fa-solid fa-briefcase mr-1"></i> Work Experience</h4>
+                            <p id="prevExpText" class="text-slate-700 dark:text-slate-300">Warehouse operations and high-reach forklift driving.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-rose-900 dark:text-rose-400 uppercase tracking-wider border-b pb-1 mb-2"><i class="fa-solid fa-star mr-1"></i> Skills & Certifications</h4>
+                            <p id="prevSkillsText" class="text-slate-700 dark:text-slate-300">Forklift NC II, Reach Truck ETR 335D, Safety Compliant</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Feed Section -->
             <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex items-center space-x-3">
                 <i class="fa-solid fa-magnifying-glass text-slate-400 ml-2"></i>
                 <input type="text" id="jobSearchInput" onkeyup="filterJobListings()" placeholder="Search jobs by title, company, or location..." class="w-full bg-transparent text-sm text-slate-800 dark:text-slate-100 focus:outline-none py-1">
@@ -153,7 +192,7 @@
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 py-10 mt-16 text-center text-sm border-t border-slate-800">
-        <p>&copy; 2026 JobLess Global AI Job Marketplace & Resume Builder. 100% Free Platform for Job Seekers.</p>
+        <p>&copy; 2026 JobLess Global AI Job Marketplace & Visual Resume Studio. Secure View-Only Platform.</p>
     </footer>
 
     <!-- JavaScript -->
@@ -175,39 +214,48 @@
             }
         }
 
-        async function generateAIResume() {
-            let templateStyle = document.getElementById('resumeTemplateStyle').value;
-            let fullName = document.getElementById('builderName').value;
-            let targetJob = document.getElementById('builderTargetJob').value;
-            let experience = document.getElementById('builderExp').value;
-            let skills = document.getElementById('builderSkills').value;
+        function previewVisualResume() {
+            let name = document.getElementById('rName').value || "Your Name";
+            let target = document.getElementById('rTarget').value || "Target Position";
+            let school = document.getElementById('rSchool').value || "School";
+            let city = document.getElementById('rCity').value || "City";
+            let contact = document.getElementById('rContact').value || "Email / Phone";
+            let exp = document.getElementById('rExp').value || "Work Experience details...";
 
-            if (!fullName || !targetJob) {
-                alert('Palihug isulod ang imong pangalan ug target job.');
-                return;
+            document.getElementById('prevName').innerText = name;
+            document.getElementById('prevTarget').innerText = target;
+            document.getElementById('prevSchool').innerText = school;
+            document.getElementById('prevCity').innerText = city;
+            document.getElementById('prevContact').innerText = contact;
+            document.getElementById('prevExpText').innerText = exp;
+
+            // Handle photo upload preview
+            let fileInput = document.getElementById('profilePhotoInput');
+            if (fileInput.files && fileInput.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('prevImg').src = e.target.result;
+                }
+                reader.readAsDataURL(fileInput.files[0]);
             }
 
+            document.getElementById('resumePreviewCard').classList.remove('hidden');
+            alert('Visual Resume successfully generated as a Secure View-Only Online Profile!');
+        }
+
+        async function askAIAssistant() {
+            let q = document.getElementById('aiQuestionInput').value;
+            if (!q.trim()) return;
             try {
-                let response = await fetch('https://jobless-ai-1.onrender.com/api/ai-generate-resume', {
+                let response = await fetch('https://jobless-ai-1.onrender.com/api/ai-chat-assistant', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ full_name: fullName, target_job: targetJob, experience: experience, skills: skills })
+                    body: JSON.stringify({ question: q })
                 });
-                let result = await response.json();
-                
-                let resumeContent = `========================================\n TEMPLATE: ${templateStyle.toUpperCase().replace('_', ' ')}\n========================================\nName: ${result.resume_data.name}\nTarget Position: ${result.resume_data.title}\n\n[SUMMARY]\n${result.resume_data.summary}\n\n[WORK EXPERIENCE]\n${result.resume_data.experience}\n\n[SKILLS & CERTIFICATIONS]\n${result.resume_data.skills.join(', ')}\n========================================`;
-                
-                let blob = new Blob([resumeContent], { type: 'text/plain' });
-                let link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = fullName.replace(/\s+/g, '_') + "_" + templateStyle + "_Resume.txt";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                alert('AI Resume Template ("' + templateStyle.replace('_', ' ') + '") successfully generated and downloaded!');
-            } catch (error) {
-                alert('Error connecting to AI Resume server.');
+                let res = await response.json();
+                document.getElementById('aiReplyBox').innerText = res.reply;
+            } catch (err) {
+                document.getElementById('aiReplyBox').innerText = "AI Assistant: E-highlight ang imong mga kahanas ug certifications!";
             }
         }
 
@@ -258,7 +306,7 @@
                                         <h3 class="font-bold text-slate-900 dark:text-white">${job.company_name}</h3>
                                         ${badge}
                                     </div>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">${job.location} • Crawled via AI</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">${job.location} • Secure AI Feed</p>
                                 </div>
                             </div>
                         </div>
@@ -333,29 +381,9 @@
                     body: JSON.stringify({ applicant_email: connectedEmail, job_id: jobId })
                 });
                 let result = await response.json();
-                alert(result.message + "\n(Application submitted for " + jobTitle + " at " + company + ")");
+                alert(result.message + "\n(Secure Online Profile submitted for " + jobTitle + " at " + company + ")");
             } catch (error) {
                 alert('Error communicating with FastAPI server.');
-            }
-        }
-
-        async function syncUniversalPortal() {
-            let portalUrl = document.getElementById('portalUrlInput').value;
-            if (!portalUrl) { alert('Palihug isulod ang link sa portal.'); return; }
-            let role = prompt("Unsang klase sa trabaho ang i-crawl?", "High Reach Forklift Operator");
-            if (!role) return;
-
-            try {
-                let response = await fetch('https://jobless-ai-1.onrender.com/api/sync-universal-portal', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ portal_url: portalUrl, search_role: role })
-                });
-                let result = await response.json();
-                alert(result.message);
-                fetchJobs();
-            } catch (error) {
-                alert('May depekto sa pagkonekta sa AI server.');
             }
         }
 
