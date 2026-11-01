@@ -62,17 +62,17 @@
         
         <!-- Left Column -->
         <div class="space-y-6">
-            <!-- Clickable Resume & Document Upload Box -->
+            <!-- Clickable Resume & Document Upload Box (Updated with <label>) -->
             <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
                 <h3 class="font-bold text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-wand-magic-sparkles text-indigo-600 mr-2"></i> AI Resume & Document Handler</h3>
                 <p class="text-xs text-slate-600 dark:text-slate-400">Upload or snap a photo of your old resume. Our AI instantly formats and optimizes it.</p>
                 
-                <div onclick="document.getElementById('resumeFileInput').click()" class="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-4 text-center cursor-pointer hover:border-indigo-500 transition bg-slate-50 dark:bg-slate-800">
+                <label for="resumeFileInput" class="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-4 text-center cursor-pointer hover:border-indigo-500 transition bg-slate-50 dark:bg-slate-800 block">
                     <i class="fa-solid fa-cloud-arrow-up text-2xl text-indigo-500 mb-1"></i>
-                    <p class="text-xs font-semibold text-slate-700 dark:text-slate-200">Click to upload or take a photo</p>
-                    <span class="text-[10px] text-slate-400">Supports PDF, JPG, PNG</span>
+                    <p class="text-xs font-semibold text-slate-700 dark:text-slate-200">Click here to select photo or PDF</p>
+                    <span id="selectedFileName" class="text-[10px] text-indigo-600 dark:text-indigo-400 font-bold block mt-1">Supports PDF, JPG, PNG</span>
                     <input type="file" id="resumeFileInput" accept=".pdf,image/*" class="hidden" onchange="handleResumeUpload(this)">
-                </div>
+                </label>
             </div>
 
             <!-- Universal Portal Crawler Box -->
@@ -169,7 +169,8 @@
         function handleResumeUpload(input) {
             if (input.files && input.files[0]) {
                 let fileName = input.files[0].name;
-                alert('Resume / Document "' + fileName + '" selected successfully! AI is now formatting and optimizing it.');
+                document.getElementById('selectedFileName').innerText = "Selected: " + fileName;
+                alert('File "' + fileName + '" successfully selected! AI is now processing your document.');
             }
         }
 
