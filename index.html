@@ -53,7 +53,7 @@
     <!-- Main Workspace Grid -->
     <main id="feed" class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        <!-- Left Column: AI Resume Builder & AdSense Slot -->
+        <!-- Left Column: AI Resume Builder, Universal Portal Crawler, & AdSense Slot -->
         <div class="space-y-6">
             <!-- Free AI Resume Builder -->
             <div id="resumeBuilder" class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
@@ -78,6 +78,16 @@
                         <input type="text" id="builderSkills" placeholder="e.g., Forklift NC II, Reach Truck, Safety Compliant" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
                     </div>
                     <button onclick="generateAIResume()" class="w-full bg-indigo-600 text-white text-xs font-bold py-2.5 rounded-xl hover:bg-indigo-700 transition shadow-sm">Generate & Download Free Resume</button>
+                </div>
+            </div>
+
+            <!-- Universal Portal Crawler (Jobsite Link Crawler) -->
+            <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-3">
+                <h3 class="font-bold text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-globe text-indigo-600 mr-2"></i> Crawl & List Hiring Portals</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-400">Paste any legit job portal link (LinkedIn, Indeed, POEA) to crawl open listings into your feed.</p>
+                <div class="space-y-2">
+                    <input type="text" id="portalUrlInput" placeholder="e.g., linkedin.com, indeed.com" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none">
+                    <button onclick="syncUniversalPortal()" class="w-full bg-indigo-600 text-white text-xs font-semibold py-2.5 rounded-xl hover:bg-indigo-700 transition">AI Crawl & List Openings</button>
                 </div>
             </div>
 
@@ -275,6 +285,26 @@
                 alert(result.message + "\n(Application submitted for " + jobTitle + " at " + company + ")");
             } catch (error) {
                 alert('Error communicating with FastAPI server.');
+            }
+        }
+
+        async function syncUniversalPortal() {
+            let portalUrl = document.getElementById('portalUrlInput').value;
+            if (!portalUrl) { alert('Palihug isulod ang link sa portal.'); return; }
+            let role = prompt("Unsang klase sa trabaho ang i-crawl?", "High Reach Forklift Operator");
+            if (!role) return;
+
+            try {
+                let response = await fetch('https://jobless-ai-1.onrender.com/api/sync-universal-portal', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ portal_url: portalUrl, search_role: role })
+                });
+                let result = await response.json();
+                alert(result.message);
+                fetchJobs();
+            } catch (error) {
+                alert('May depekto sa pagkonekta sa AI server.');
             }
         }
 
