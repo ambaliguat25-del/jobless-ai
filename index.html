@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        button, input, textarea, label {
+        button, input, textarea, label, select {
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
         }
@@ -52,21 +52,29 @@
         <div class="max-w-4xl mx-auto space-y-6">
             <span class="bg-indigo-800/80 text-indigo-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-indigo-600">100% Free Worldwide Bridge & AI Tool</span>
             <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Create Professional Resumes & Browse Global Jobs with AI</h1>
-            <p class="text-slate-300 text-lg max-w-2xl mx-auto">Build your optimized resume for free using AI, browse verified listings, like/comment posts, and apply with a single click.</p>
+            <p class="text-slate-300 text-lg max-w-2xl mx-auto">Build your optimized resume for free using AI templates, browse verified listings, like/comment posts, and apply with a single click.</p>
         </div>
     </section>
 
     <!-- Main Workspace Grid -->
     <main id="feed" class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        <!-- Left Column: AI Resume Builder, Universal Portal Crawler, & AdSense Slot -->
+        <!-- Left Column: AI Resume Builder with Templates, Portal Crawler, & AdSense -->
         <div class="space-y-6">
-            <!-- Free AI Resume Builder -->
+            <!-- Free AI Resume Builder & Templates -->
             <div id="resumeBuilder" class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
-                <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-file-pen text-indigo-600 mr-2"></i> Free AI Resume Builder</h3>
-                <p class="text-xs text-slate-600 dark:text-slate-400">Fill in your details below and let AI format and generate your professional resume instantly.</p>
+                <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-file-pen text-indigo-600 mr-2"></i> Free AI Resume Builder & Templates</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-400">Choose your template style and fill in your details to generate a professional resume instantly.</p>
                 
                 <div class="space-y-3">
+                    <div>
+                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Select Resume Template</label>
+                        <select id="resumeTemplateStyle" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                            <option value="modern_two_column">Modern Two-Column Layout (Burgundy Sidebar Style)</option>
+                            <option value="professional_clean">Professional Clean Minimalist</option>
+                            <option value="executive_bold">Bold Executive Format</option>
+                        </select>
+                    </div>
                     <div>
                         <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Full Name</label>
                         <input type="text" id="builderName" placeholder="e.g., Aproniano Mark Baliguat" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
@@ -81,9 +89,9 @@
                     </div>
                     <div>
                         <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Skills & Certifications</label>
-                        <input type="text" id="builderSkills" placeholder="e.g., Forklift NC II, Reach Truck" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                        <input type="text" id="builderSkills" placeholder="e.g., Forklift NC II, Reach Truck, Safety Compliant" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
                     </div>
-                    <button type="button" onclick="generateAIResume()" class="w-full bg-indigo-600 text-white text-sm font-bold py-3.5 rounded-xl hover:bg-indigo-700 transition shadow-md cursor-pointer">Generate & Download Free Resume</button>
+                    <button type="button" onclick="generateAIResume()" class="w-full bg-indigo-600 text-white text-sm font-bold py-3.5 rounded-xl hover:bg-indigo-700 transition shadow-md cursor-pointer">Generate & Download Template</button>
                 </div>
             </div>
 
@@ -168,6 +176,7 @@
         }
 
         async function generateAIResume() {
+            let templateStyle = document.getElementById('resumeTemplateStyle').value;
             let fullName = document.getElementById('builderName').value;
             let targetJob = document.getElementById('builderTargetJob').value;
             let experience = document.getElementById('builderExp').value;
@@ -186,17 +195,17 @@
                 });
                 let result = await response.json();
                 
-                let resumeContent = `=== PROFESSIONAL RESUME ===\nName: ${result.resume_data.name}\nTarget: ${result.resume_data.title}\n\nSummary:\n${result.resume_data.summary}\n\nExperience:\n${result.resume_data.experience}\n\nSkills:\n${result.resume_data.skills.join(', ')}`;
+                let resumeContent = `========================================\n TEMPLATE: ${templateStyle.toUpperCase().replace('_', ' ')}\n========================================\nName: ${result.resume_data.name}\nTarget Position: ${result.resume_data.title}\n\n[SUMMARY]\n${result.resume_data.summary}\n\n[WORK EXPERIENCE]\n${result.resume_data.experience}\n\n[SKILLS & CERTIFICATIONS]\n${result.resume_data.skills.join(', ')}\n========================================`;
                 
                 let blob = new Blob([resumeContent], { type: 'text/plain' });
                 let link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-                link.download = fullName.replace(/\s+/g, '_') + "_AI_Resume.txt";
+                link.download = fullName.replace(/\s+/g, '_') + "_" + templateStyle + "_Resume.txt";
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
 
-                alert('AI Resume successfully generated and downloaded to your device!');
+                alert('AI Resume Template ("' + templateStyle.replace('_', ' ') + '") successfully generated and downloaded!');
             } catch (error) {
                 alert('Error connecting to AI Resume server.');
             }
