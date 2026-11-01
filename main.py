@@ -12,25 +12,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class ResumeProfile(BaseModel):
+class ResumeProfile(BaseModel, extra="allow"):
     full_name: str
     target_job: str
     school: str
     city: str
-    state: str
-    email: str
-    phone: str
-    education: str
-    achievements: str
-    skills: str
+    contact: str
     experience: str
 
-class JobRequest(BaseModel):
-    company_name: str
-    job_title: str
-    location: str
-    contact_info: str
-    is_sponsored: bool = False
+# In-memory database para sa mga naka-save nga applicant profiles (View-Only)
+profiles_db = [
+    {
+        "id": 1,
+        "full_name": "Aproniano Mark Baliguat",
+        "target_job": "High Reach Forklift Operator",
+        "school": "High School Graduate",
+        "city": "Christchurch, New Zealand",
+        "contact": "ambaliguat25@gmail.com | +64...",
+        "experience": "Operated Jungheinrich ETR 335D reach trucks, warehouse checking and logistics workflows."
+    }
+]
 
 jobs_db = [
     {
@@ -41,15 +42,6 @@ jobs_db = [
         "contact_info": "HR Department / Christchurch Operations",
         "verified": True,
         "is_sponsored": True
-    },
-    {
-        "id": 2,
-        "company_name": "International Pharmaceuticals, Inc. (IPI)",
-        "job_title": "Warehouse Checker & Reach Truck Operator",
-        "location": "Mandaue City, Cebu, Philippines",
-        "contact_info": "careers@ipi.ph",
-        "verified": True,
-        "is_sponsored": False
     }
 ]
 
@@ -57,11 +49,16 @@ jobs_db = [
 def get_jobs():
     return jobs_db
 
+@app.get("/api/employer/profiles")
+def get_employer_profiles():
+    return profiles_db
+
 @app.post("/api/ai-save-profile")
 def save_profile(profile: ResumeProfile):
+    profiles_db.insert(0, profile.dict())
     return {
         "status": "success",
-        "message": "Digital Resume Profile successfully saved and optimized for employers to view securely online!",
+        "message": "Profile successfully saved to account and secured for employer view-only mode!",
         "profile": profile
     }
 
@@ -69,13 +66,9 @@ def save_profile(profile: ResumeProfile):
 def ai_chat(data: dict):
     question = data.get("question", "")
     return {
-        "reply": f"AI Assistant: Sugyot para sa imong pangutana ('{question}'): Ibutang ang imong konkretong kasinatian ug pamatud-i sa soft skills aron mas dali ka mapilian sa mga employer!"
+        "reply": f"AI Assistant: Sugyot para sa imong pangulat ('{question}'): I-highlight ang imong mga lisensya ug certifications aron mas dali ka mapilian sa mga ahensya."
     }
-
-@app.post("/api/ai-auto-apply")
-def ai_auto_apply(data: dict):
-    return {"status": "success", "message": f"AI Bridge successfully submitted online resume profile using {data.get('applicant_email')}"}
 
 @app.get("/api/admin/stats")
 def admin_stats():
-    return {"estimated_ad_revenue_usd": 210.40, "active_screen_users": 68}
+    return {"estimated_ad_revenue_usd": 245.50, "active_screen_users": 74}
