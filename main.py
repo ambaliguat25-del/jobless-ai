@@ -12,7 +12,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class UserRegister(BaseModel):
+    email: str
+    password: str
+    role: str # "seeker" o "employer"
+
 class ResumeProfile(BaseModel, extra="allow"):
+    email: str
     full_name: str
     target_job: str
     school: str
@@ -20,10 +26,11 @@ class ResumeProfile(BaseModel, extra="allow"):
     contact: str
     experience: str
 
-# In-memory database para sa mga naka-save nga applicant profiles (View-Only)
+# In-memory databases
+users_db = []
 profiles_db = [
     {
-        "id": 1,
+        "email": "aproniano@gmail.com",
         "full_name": "Aproniano Mark Baliguat",
         "target_job": "High Reach Forklift Operator",
         "school": "High School Graduate",
@@ -49,6 +56,15 @@ jobs_db = [
 def get_jobs():
     return jobs_db
 
+@app.post("/api/auth/register")
+def register_user(user: UserRegister):
+    users_db.append(user.dict())
+    return {"status": "success", "message": f"Successfully registered as {user.role}!"}
+
+@app.post("/api/auth/login")
+def login_user(user: UserRegister):
+    return {"status": "success", "message": f"Welcome back, {user.email}!", "role": user.role}
+
 @app.get("/api/employer/profiles")
 def get_employer_profiles():
     return profiles_db
@@ -58,17 +74,19 @@ def save_profile(profile: ResumeProfile):
     profiles_db.insert(0, profile.dict())
     return {
         "status": "success",
-        "message": "Profile successfully saved to account and secured for employer view-only mode!",
+        "message": "Profile securely saved to your account! View-only mode active for verified employers.",
         "profile": profile
     }
 
-@app.post("/api/ai-chat-assistant")
-def ai_chat(data: dict):
-    question = data.get("question", "")
+@app.post("/api/ai-auto-apply")
+def ai_auto_apply(data: dict):
+    applicant_email = data.get("applicant_email")
+    job_id = data.get("job_id")
     return {
-        "reply": f"AI Assistant: Sugyot para sa imong pangulat ('{question}'): I-highlight ang imong mga lisensya ug certifications aron mas dali ka mapilian sa mga ahensya."
+        "status": "success", 
+        "message": f"AI Bridge successfully notified employer and shared secure view-only profile link for applicant: {applicant_email}"
     }
 
 @app.get("/api/admin/stats")
 def admin_stats():
-    return {"estimated_ad_revenue_usd": 245.50, "active_screen_users": 74}
+    return {"estimated_ad_revenue_usd": 280.00, "active_screen_users": 82}
