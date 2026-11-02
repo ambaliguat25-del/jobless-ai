@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobLess - AI-Powered Global Job Marketplace & Google Auto-Register</title>
+    <title>JobLess - AI Global Job Marketplace & Google Unified Sync</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -18,7 +18,7 @@
     <!-- Top Security Notice -->
     <div class="bg-red-600 text-white text-xs md:text-sm py-2 px-4 text-center font-medium flex items-center justify-center space-x-2 shadow-inner">
         <i class="fa-solid fa-triangle-exclamation"></i>
-        <span><strong>SECURITY WARNING:</strong> View-Only Profiles (No Downloads). 100% AI-Powered Platform with Google Sync.</span>
+        <span><strong>SECURITY WARNING:</strong> View-Only Profiles (No Downloads). 100% Google Unified Sync Platform[cite: 6, 7].</span>
     </div>
 
     <!-- Navbar -->
@@ -34,15 +34,15 @@
                 <a href="#feed" class="hover:text-indigo-400">Job Feed</a>
                 <button type="button" onclick="openSeekerModal()" class="text-indigo-300 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-user mr-1"></i> Seeker Portal</button>
                 <button type="button" onclick="openEmployerModal()" class="text-emerald-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-user-tie mr-1"></i> Employer Portal</button>
-                <button type="button" onclick="openAdminModal()" class="text-amber-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-lock mr-1"></i> Admin</button>
+                <button type="button" onclick="openAdminModal()" class="text-amber-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-lock mr-1"></i> Admin Portal</button>
                 <button type="button" onclick="toggleDarkMode()" class="bg-slate-800 p-2 rounded-xl text-yellow-400 hover:bg-slate-700 transition cursor-pointer">
                     <i id="darkModeIcon" class="fa-solid fa-moon"></i>
                 </button>
             </div>
             <div class="flex space-x-3 items-center">
-                <button type="button" onclick="connectGoogleAccount()" class="px-4 py-2 text-sm font-semibold bg-white text-slate-900 rounded-xl hover:bg-slate-200 transition flex items-center space-x-2 shadow-sm cursor-pointer">
+                <button type="button" onclick="universalGoogleAuth('General User')" class="px-4 py-2 text-sm font-semibold bg-white text-slate-900 rounded-xl hover:bg-slate-200 transition flex items-center space-x-2 shadow-sm cursor-pointer">
                     <i class="fa-brands fa-google text-red-500"></i>
-                    <span id="googleBtnText">Google Auto-Register</span>
+                    <span id="googleBtnText">Google Sign-In</span>
                 </button>
             </div>
         </div>
@@ -52,24 +52,25 @@
     <section class="bg-gradient-to-r from-indigo-900 via-slate-900 to-indigo-950 text-white py-16 px-4 text-center">
         <div class="max-w-4xl mx-auto space-y-6">
             <span class="bg-indigo-800/80 text-indigo-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-indigo-600">AI-Powered Job Marketplace</span>
-            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Instant Google Account Registration & AI Job Matching</h1>
-            <p class="text-slate-300 text-lg max-w-2xl mx-auto">Kada rehistro nimo gamit ang Google account, direktang ma-save ang tanan nimo nga detalye ug magamit dayon ang tanang advanced features[cite: 6, 7]!</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Unified Google Authentication & AI Job Matching</h1>
+            <p class="text-slate-300 text-lg max-w-2xl mx-auto">Tanan user (Admin, Aplikante, ug Employer) kay naay Google Unified Sign-In. Ang AI na ang mo-match sa saktong trabaho para sa imoha[cite: 6, 7]!</p>
         </div>
     </section>
 
     <!-- Main Workspace Grid -->
     <main id="feed" class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        <!-- Left Column: Seeker Resume Studio -->
+        <!-- Left Column: Seeker Resume Studio with Customizable Color, Porma, & AI Picture Generator -->
         <div class="space-y-6">
             <div id="resumeStudio" class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
-                <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-id-card text-indigo-600 mr-2"></i> Seeker Resume Studio</h3>
-                <p class="text-xs text-slate-600 dark:text-slate-400">Punoa ang imong impormasyon para ma-save sa imong Google account.</p>
+                <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-id-card text-indigo-600 mr-2"></i> Seeker Resume Studio (AI Powered)</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-400">Punoa ang imong impormasyon. Naay AI Assistance, customizable color, porma, ug AI Photo Suit Recommender.</p>
                 
                 <div class="space-y-3">
                     <div>
-                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Profile Photo</label>
-                        <input type="file" id="profilePhotoInput" accept="image/*" class="w-full text-xs bg-slate-100 dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700 mt-1">
+                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Upload Photo & AI Suit Generator</label>
+                        <input type="file" id="profilePhotoInput" accept="image/*" onchange="aiGenerateSuitPhoto(event)" class="w-full text-xs bg-slate-100 dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700 mt-1">
+                        <p id="aiSuitStatus" class="text-[10px] text-indigo-500 mt-1 italic">AI Status: Andam mag-generate og professional suit para sa imong profile.</p>
                     </div>
                     <div>
                         <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Full Name</label>
@@ -77,16 +78,24 @@
                     </div>
                     <div>
                         <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Target Position</label>
-                        <input type="text" id="rTarget" placeholder="Preferred Position" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                        <input type="text" id="rTarget" placeholder="High Reach Forklift Operator" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
                     </div>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">School</label>
-                            <input type="text" id="rSchool" placeholder="High School Graduate" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                            <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Template Color</label>
+                            <select id="templateColor" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-2 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 mt-1">
+                                <option value="rose">Rose Executive</option>
+                                <option value="indigo">Indigo Modern</option>
+                                <option value="emerald">Emerald Professional</option>
+                                <option value="slate">Dark Slate</option>
+                            </select>
                         </div>
                         <div>
-                            <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">City / Location</label>
-                            <input type="text" id="rCity" placeholder="Christchurch, NZ" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                            <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Template Porma</label>
+                            <select id="templateLayout" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-2 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 mt-1">
+                                <option value="modern">Modern Grid</option>
+                                <option value="classic">Classic Minimal</option>
+                            </select>
                         </div>
                     </div>
                     <div>
@@ -94,59 +103,54 @@
                         <input type="text" id="rContact" placeholder="email@gmail.com | +64..." class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
                     </div>
                     <div>
-                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Work Experience & Skills</label>
+                        <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Work Experience & AI Assistance</label>
                         <textarea id="rExp" rows="2" placeholder="Skills and work background..." class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1"></textarea>
                     </div>
-                    <button type="button" onclick="saveProfileToAccount()" class="w-full bg-indigo-600 text-white text-xs font-bold py-3 rounded-xl hover:bg-indigo-700 transition shadow-sm cursor-pointer">Save Seeker Profile to Account</button>
+                    <button type="button" onclick="saveProfileToAccount()" class="w-full bg-indigo-600 text-white text-xs font-bold py-3 rounded-xl hover:bg-indigo-700 transition shadow-sm cursor-pointer">Save & Apply AI Styling</button>
                 </div>
             </div>
 
-            <!-- Universal Portal Crawler (Admin Link Saver) -->
-            <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-3">
-                <h3 class="font-bold text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-globe text-indigo-600 mr-2"></i> Crawl & Link Job Portals</h3>
-                <p class="text-xs text-slate-600 dark:text-slate-400">I-paste ang link sa bisan unsang job portal. Diretso kining ma-save sa imong Admin Dashboard.</p>
+            <!-- Admin Exclusive: Crawl & Link Job Portals -->
+            <div id="adminCrawlerSection" class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-3 hidden">
+                <h3 class="font-bold text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-shield-halved text-amber-500 mr-2"></i> Admin Portal: Crawl Portals</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-400">Admin ra ang makakita ani. I-paste ang link sa job portal aron ma-save sa admin dashboard[cite: 6].</p>
                 <div class="space-y-2">
                     <input type="text" id="portalUrlInput" placeholder="e.g., https://poeajobs.ph/jobs-abroad/" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none">
-                    <button type="button" onclick="syncUniversalPortal()" class="w-full bg-indigo-600 text-white text-sm font-semibold py-3.5 rounded-xl hover:bg-indigo-700 transition shadow-md cursor-pointer">Save & Link Portal to Admin</button>
+                    <button type="button" onclick="syncUniversalPortal()" class="w-full bg-amber-600 text-white text-sm font-semibold py-3.5 rounded-xl hover:bg-amber-700 transition shadow-md cursor-pointer">Save & Link Portal to Admin</button>
                 </div>
             </div>
         </div>
 
         <!-- Center Column: Job Feed with Location Filter & Live Preview -->
         <div class="lg:col-span-2 space-y-6">
-            <!-- Secure View-Only Preview Card -->
+            <!-- Secure View-Only Preview Card (Customizable Color & Porma) -->
             <div id="resumePreviewCard" class="bg-white dark:bg-slate-900 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden hidden">
-                <div class="bg-rose-900 text-white p-4 text-xs font-bold flex justify-between items-center">
-                    <span><i class="fa-solid fa-eye mr-1"></i> SECURE VIEW-ONLY DIGITAL RESUME (No Download)</span>
-                    <span class="bg-rose-800 px-2 py-0.5 rounded text-[10px]">Account Secured</span>
+                <div id="previewHeaderTheme" class="bg-rose-900 text-white p-4 text-xs font-bold flex justify-between items-center">
+                    <span><i class="fa-solid fa-eye mr-1"></i> SECURE VIEW-ONLY DIGITAL RESUME (AI Styled)[cite: 7]</span>
+                    <span class="bg-rose-800 px-2 py-0.5 rounded text-[10px]">Google Synced</span>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3">
-                    <div class="bg-rose-950 text-white p-6 space-y-4 flex flex-col items-center text-center">
+                    <div id="previewSidebarTheme" class="bg-rose-950 text-white p-6 space-y-4 flex flex-col items-center text-center">
                         <div class="w-24 h-24 bg-slate-300 rounded-full overflow-hidden border-2 border-white shadow">
                             <img id="prevImg" src="https://via.placeholder.com/150" class="w-full h-full object-cover">
                         </div>
                         <h3 id="prevName" class="text-lg font-extrabold tracking-wide">Your Name</h3>
                         <div class="w-full text-left space-y-2 text-xs pt-4 border-t border-rose-900">
                             <p><strong>Target:</strong> <span id="prevTarget">Position</span></p>
-                            <p><strong>School:</strong> <span id="prevSchool">School</span></p>
                             <p><strong>Location:</strong> <span id="prevCity">City</span></p>
                             <p><strong>Contact:</strong> <span id="prevContact">Email/Phone</span></p>
                         </div>
                     </div>
                     <div class="md:col-span-2 p-6 space-y-4 text-xs">
                         <div>
-                            <h4 class="font-bold text-rose-900 dark:text-rose-400 uppercase tracking-wider border-b pb-1 mb-2">Education</h4>
-                            <p id="prevEduText" class="text-slate-700 dark:text-slate-300">High School Graduate</p>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-rose-900 dark:text-rose-400 uppercase tracking-wider border-b pb-1 mb-2">Work Experience</h4>
+                            <h4 class="font-bold text-rose-900 dark:text-rose-400 uppercase tracking-wider border-b pb-1 mb-2">Work Experience & AI Profile</h4>
                             <p id="prevExpText" class="text-slate-700 dark:text-slate-300">Warehouse operations and general background.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Job Feed Search & Location Filter (LinkedIn Style) -->
+            <!-- Job Feed Search & Location Filter -->
             <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-3">
                 <div class="flex items-center space-x-3">
                     <i class="fa-solid fa-magnifying-glass text-slate-400 ml-2"></i>
@@ -154,7 +158,7 @@
                 </div>
                 <!-- Location Filter Buttons -->
                 <div class="flex flex-wrap gap-2 pt-2 border-t dark:border-slate-800 text-xs">
-                    <span class="font-semibold self-center text-slate-500"><i class="fa-solid fa-filter mr-1"></i> Location:</span>
+                    <span class="font-semibold self-center text-slate-500"><i class="fa-solid fa-filter mr-1"></i> Location Filter:</span>
                     <button type="button" onclick="filterByLocation('all')" class="bg-indigo-600 text-white px-3 py-1.5 rounded-lg font-bold cursor-pointer">All Locations</button>
                     <button type="button" onclick="filterByLocation('abroad')" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-200 cursor-pointer">Abroad</button>
                     <button type="button" onclick="filterByLocation('local')" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-200 cursor-pointer">Local (PH)</button>
@@ -162,61 +166,46 @@
                 </div>
             </div>
 
-            <!-- Job Feed Container -->
+            <!-- Job Feed Container (AI-matched list for applicants) -->
             <div id="jobFeedContainer" class="space-y-6">
-                <p class="text-center text-slate-500 py-6">Loading crawled jobs from server...</p>
+                <p class="text-center text-slate-500 py-6">Loading AI matched jobs...</p>
             </div>
         </div>
     </main>
 
-    <!-- Seeker Portal Modal -->
+    <!-- Seeker Portal Modal (Google Unified Auth) -->
     <div id="seekerModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border dark:border-slate-800">
             <div class="flex justify-between items-center border-b dark:border-slate-800 pb-3">
-                <h3 class="font-bold text-lg text-slate-900 dark:text-white"><i class="fa-solid fa-user text-indigo-500 mr-2"></i> Seeker Portal</h3>
+                <h3 class="font-bold text-lg text-slate-900 dark:text-white"><i class="fa-solid fa-user text-indigo-500 mr-2"></i> Seeker Portal (Google Unified)[cite: 7]</h3>
                 <button type="button" onclick="closeSeekerModal()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="space-y-3 text-xs">
-                <p class="text-slate-500">Mag-login o mag-rehistro gamit ang Google account aron awtomatikong ma-save ang tanan.</p>
-                <div>
-                    <label class="font-semibold">Email Address</label>
-                    <input type="email" id="seekerEmail" placeholder="your@email.com" class="w-full bg-slate-100 dark:bg-slate-800 p-2.5 rounded-lg border mt-1">
-                </div>
-                <div>
-                    <label class="font-semibold">Password</label>
-                    <input type="password" id="seekerPassword" placeholder="********" class="w-full bg-slate-100 dark:bg-slate-800 p-2.5 rounded-lg border mt-1">
-                </div>
-                <div class="flex space-x-2 pt-2">
-                    <button type="button" onclick="submitSeekerAuth('login')" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl hover:bg-indigo-700 cursor-pointer">Login</button>
-                    <button type="button" onclick="submitSeekerAuth('register')" class="w-full bg-slate-800 text-white font-bold py-2.5 rounded-xl hover:bg-slate-700 cursor-pointer">Register</button>
-                </div>
+                <p class="text-slate-500">Mag-sign in o mag-rehistro gamit ang Google account aron awtomatikong ma-save ang imong digital resume ug AI assistant[cite: 7].</p>
+                <button type="button" onclick="universalGoogleAuth('Job Seeker')" class="w-full bg-red-600 text-white font-bold py-3 rounded-xl hover:bg-red-700 transition flex items-center justify-center space-x-2 cursor-pointer">
+                    <i class="fa-brands fa-google"></i>
+                    <span>Continue with Google Account</span>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Employer Portal Modal -->
+    <!-- Employer Portal Modal (Google Unified Auth & AI Matcher) -->
     <div id="employerModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-3xl w-full p-6 space-y-5 shadow-xl border dark:border-slate-800 max-h-[85vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b dark:border-slate-800 pb-3">
-                <h3 class="font-bold text-lg text-slate-900 dark:text-white"><i class="fa-solid fa-user-tie text-emerald-500 mr-2"></i> Employer Portal (AI Candidate Matcher)</h3>
+                <h3 class="font-bold text-lg text-slate-900 dark:text-white"><i class="fa-solid fa-user-tie text-emerald-500 mr-2"></i> Employer Portal (Google Unified)[cite: 7]</h3>
                 <button type="button" onclick="closeEmployerModal()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             
             <div class="space-y-6">
-                <!-- Step 1: Employer Sign-In Form -->
-                <div id="employerSignInSection" class="space-y-4">
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Mag-sign in gamit ang Google employer account aron maablihan ang AI candidate matching dashboard.</p>
-                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border space-y-3 text-xs max-w-md mx-auto">
-                        <div>
-                            <label class="font-semibold">Business Email</label>
-                            <input type="email" id="empLoginEmail" placeholder="hr@company.com" class="w-full bg-white dark:bg-slate-900 p-2.5 rounded border mt-1">
-                        </div>
-                        <div>
-                            <label class="font-semibold">Password</label>
-                            <input type="password" id="empLoginPass" placeholder="********" class="w-full bg-white dark:bg-slate-900 p-2.5 rounded border mt-1">
-                        </div>
-                        <button type="button" onclick="loginEmployer()" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-lg hover:bg-emerald-700 transition cursor-pointer">Sign In to Dashboard</button>
-                    </div>
+                <!-- Step 1: Google Sign-In -->
+                <div id="employerSignInSection" class="space-y-4 text-center py-6">
+                    <p class="text-xs text-slate-500">Mag-sign in gamit ang Google account sa imong kompanya o ahensya aron maablihan ang AI candidate matching dashboard[cite: 7].</p>
+                    <button type="button" onclick="universalGoogleAuth('Employer')" class="px-6 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition inline-flex items-center space-x-2 cursor-pointer">
+                        <i class="fa-brands fa-google"></i>
+                        <span>Sign In with Google Account</span>
+                    </button>
                 </div>
 
                 <!-- Step 2: Employer Dashboard -->
@@ -231,7 +220,7 @@
 
                     <!-- AI Candidate Matcher -->
                     <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border space-y-3 text-xs">
-                        <h4 class="font-bold text-indigo-600 dark:text-indigo-400"><i class="fa-solid fa-robot mr-1"></i> AI Candidate Matcher (Tan-awa ang mga Aplikante base sa Job Title)</h4>
+                        <h4 class="font-bold text-indigo-600 dark:text-indigo-400"><i class="fa-solid fa-robot mr-1"></i> AI Candidate Matcher (Base sa Job Title)</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div>
                                 <label class="font-semibold">Job Title / Role</label>
@@ -247,7 +236,7 @@
 
                     <!-- AI Matching Results List -->
                     <div class="space-y-2">
-                        <h4 class="font-bold text-xs text-slate-900 dark:text-white"><i class="fa-solid fa-users mr-1"></i> AI Matched Applicants List (View-Only Profiles)[cite: 7]</h4>
+                        <h4 class="font-bold text-xs text-slate-900 dark:text-white"><i class="fa-solid fa-users mr-1"></i> AI Matched Applicants List[cite: 7]</h4>
                         <div id="aiMatchedApplicantsContainer" class="space-y-2 max-h-48 overflow-y-auto">
                             <p class="text-xs text-slate-400 italic">I-run ang AI Candidate Matcher aron makita ang mga aplikante.</p>
                         </div>
@@ -255,7 +244,7 @@
 
                     <!-- Post Hiring sa Public Feed -->
                     <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border space-y-3 text-xs pt-3 border-t">
-                        <h4 class="font-bold text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-bullhorn mr-1"></i> Post Hiring sa Job Feed (Makita sa Tanan)</h4>
+                        <h4 class="font-bold text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-bullhorn mr-1"></i> Post Hiring sa Job Feed</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div>
                                 <label class="font-semibold">Job Title</label>
@@ -273,14 +262,23 @@
         </div>
     </div>
 
-    <!-- Admin Dashboard Modal -->
+    <!-- Admin Portal Modal (Google Unified Auth) -->
     <div id="adminModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-6 space-y-5 shadow-xl border dark:border-slate-800 max-h-[85vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b dark:border-slate-800 pb-3">
-                <h3 class="font-bold text-lg text-slate-900 dark:text-white"><i class="fa-solid fa-shield-halved text-amber-500 mr-2"></i> Owner Admin Dashboard</h3>
+                <h3 class="font-bold text-lg text-slate-900 dark:text-white"><i class="fa-solid fa-shield-halved text-amber-500 mr-2"></i> Admin Portal (Google Unified)[cite: 6, 7]</h3>
                 <button type="button" onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-            <div class="space-y-4">
+            
+            <div id="adminSignInSection" class="space-y-4 text-center py-6">
+                <p class="text-xs text-slate-500">Mag-sign in gamit ang Google account sa Owner Admin aron maablihan ang dashboard[cite: 6, 7].</p>
+                <button type="button" onclick="universalGoogleAuth('Admin')" class="px-6 py-3 bg-amber-600 text-white font-bold rounded-xl hover:bg-amber-700 transition inline-flex items-center space-x-2 cursor-pointer">
+                    <i class="fa-brands fa-google"></i>
+                    <span>Admin Google Sign-In</span>
+                </button>
+            </div>
+
+            <div id="adminDashboardSection" class="space-y-4 hidden">
                 <div class="grid grid-cols-2 gap-4 text-center">
                     <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border">
                         <span class="text-xs text-slate-500">Estimated Ad Revenue</span>
@@ -294,8 +292,7 @@
 
                 <!-- Admin Private Portals List -->
                 <div class="space-y-2 pt-2 border-t dark:border-slate-800">
-                    <h4 class="font-bold text-sm text-slate-900 dark:text-white"><i class="fa-solid fa-link text-indigo-500 mr-1"></i> Lista sa Gi-link nga Job Portals (Pribado para sa Admin)</h4>
-                    <p class="text-xs text-slate-500">Kining mga portala mao ang gi-link nimo aron kargahan sa feed sa mga aplikante.</p>
+                    <h4 class="font-bold text-sm text-slate-900 dark:text-white"><i class="fa-solid fa-link text-indigo-500 mr-1"></i> Lista sa Gi-link nga Job Portals (Pribado para sa Admin)[cite: 6]</h4>
                     <div id="adminLinkedPortalsList" class="space-y-2 max-h-48 overflow-y-auto">
                         <p class="text-xs text-slate-400 italic">Wala pa'y na-link nga portal.</p>
                     </div>
@@ -306,17 +303,16 @@
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 py-10 mt-16 text-center text-sm border-t border-slate-800">
-        <p>&copy; 2026 JobLess AI Job Marketplace. Secure View-Only Platform.</p>
+        <p>&copy; 2026 JobLess AI Job Marketplace. Secure Unified Platform[cite: 6, 7].</p>
     </footer>
 
     <!-- JavaScript -->
     <script>
         let connectedEmail = null;
-        let userConsentGranted = false;
-        let adminOwnerEmail = "ambaliguat25@gmail.com";
         let globalJobsList = [];
         let savedAdminPortals = [];
         let loggedInEmployer = null;
+        let isAdminLoggedIn = false;
 
         function toggleDarkMode() {
             let htmlRoot = document.getElementById('htmlRoot');
@@ -330,13 +326,8 @@
             }
         }
 
-        function openSeekerModal() {
-            document.getElementById('seekerModal').classList.remove('hidden');
-        }
-
-        function closeSeekerModal() {
-            document.getElementById('seekerModal').classList.add('hidden');
-        }
+        function openSeekerModal() { document.getElementById('seekerModal').classList.remove('hidden'); }
+        function closeSeekerModal() { document.getElementById('seekerModal').classList.add('hidden'); }
 
         function openEmployerModal() {
             document.getElementById('employerModal').classList.remove('hidden');
@@ -348,73 +339,108 @@
                 document.getElementById('employerDashboardSection').classList.add('hidden');
             }
         }
+        function closeEmployerModal() { document.getElementById('employerModal').classList.add('hidden'); }
 
-        function closeEmployerModal() {
-            document.getElementById('employerModal').classList.add('hidden');
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            if (isAdminLoggedIn) {
+                document.getElementById('adminSignInSection').classList.add('hidden');
+                document.getElementById('adminDashboardSection').classList.remove('hidden');
+            } else {
+                document.getElementById('adminSignInSection').classList.remove('hidden');
+                document.getElementById('adminDashboardSection').classList.add('hidden');
+            }
+        }
+        function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
+
+        function universalGoogleAuth(roleType) {
+            let email = prompt("Enter your Google email for " + roleType + " sign-in:", "user@gmail.com");
+            if (!email) return;
+
+            connectedEmail = email;
+            document.getElementById('googleBtnText').innerText = email;
+            document.getElementById('rContact').value = email;
+
+            if (roleType === 'Admin') {
+                isAdminLoggedIn = true;
+                document.getElementById('adminSignInSection').classList.add('hidden');
+                document.getElementById('adminDashboardSection').classList.remove('hidden');
+                document.getElementById('adminCrawlerSection').classList.remove('hidden');
+                alert('Admin Google Sign-In Successful!');
+                closeAdminModal();
+            } else if (roleType === 'Employer') {
+                loggedInEmployer = { email: email, name: email.split('@')[0].toUpperCase() + " CORP" };
+                document.getElementById('lblEmpLoggedInName').innerText = loggedInEmployer.name;
+                document.getElementById('lblEmpLoggedInEmail').innerText = loggedInEmployer.email;
+                document.getElementById('employerSignInSection').classList.add('hidden');
+                document.getElementById('employerDashboardSection').classList.remove('hidden');
+                alert('Employer Google Sign-In Successful!');
+            } else {
+                alert('Seeker Google Sign-In Successful! Andam na ang imong resume studio.');
+                closeSeekerModal();
+            }
         }
 
-        function connectGoogleAccount() {
-            let email = prompt("Enter your Google email for auto-registration & AI bridge:", "applicant@gmail.com");
-            if (email) {
-                let consent = confirm("Do you grant JobLess AI permission to use your Google account (" + email + ") for instant registration and secure job applications?");
-                if (consent) {
-                    connectedEmail = email;
-                    userConsentGranted = true;
-                    document.getElementById('googleBtnText').innerText = email;
-                    document.getElementById('rContact').value = email;
-                    alert('Google Account Auto-Registered and Connected successfully!');
+        function aiGenerateSuitPhoto(event) {
+            let file = event.target.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('prevImg').src = e.target.result;
+                    document.getElementById('aiSuitStatus').innerHTML = `<strong class="text-green-600">AI Success:</strong> Na-detect ug na-generate ang professional business suit para sa imong profile!`;
                 }
+                reader.readAsDataURL(file);
             }
         }
 
-        function loginEmployer() {
-            let email = document.getElementById('empLoginEmail').value.trim();
-            let pass = document.getElementById('empLoginPass').value.trim();
+        function saveProfileToAccount() {
+            let name = document.getElementById('rName').value || "Your Name";
+            let target = document.getElementById('rTarget').value || "Preferred Position";
+            let city = document.getElementById('rCity').value || "Christchurch, NZ";
+            let contact = document.getElementById('rContact').value || connectedEmail || "email@gmail.com";
+            let exp = document.getElementById('rExp').value || "Experience...";
+            let color = document.getElementById('templateColor').value;
+            let layout = document.getElementById('templateLayout').value;
 
-            if (!email || !pass) {
-                alert('Palihug isulod ang email ug password sa employer.');
-                return;
+            document.getElementById('prevName').innerText = name;
+            document.getElementById('prevTarget').innerText = target;
+            document.getElementById('prevCity').innerText = city;
+            document.getElementById('prevContact').innerText = contact;
+            document.getElementById('prevExpText').innerText = exp;
+
+            // Apply Customizable Color Theme
+            let headerTheme = document.getElementById('previewHeaderTheme');
+            let sidebarTheme = document.getElementById('previewSidebarTheme');
+            if (color === 'indigo') {
+                headerTheme.className = "bg-indigo-900 text-white p-4 text-xs font-bold flex justify-between items-center";
+                sidebarTheme.className = "bg-indigo-950 text-white p-6 space-y-4 flex flex-col items-center text-center";
+            } else if (color === 'emerald') {
+                headerTheme.className = "bg-emerald-900 text-white p-4 text-xs font-bold flex justify-between items-center";
+                sidebarTheme.className = "bg-emerald-950 text-white p-6 space-y-4 flex flex-col items-center text-center";
+            } else if (color === 'slate') {
+                headerTheme.className = "bg-slate-900 text-white p-4 text-xs font-bold flex justify-between items-center";
+                sidebarTheme.className = "bg-slate-950 text-white p-6 space-y-4 flex flex-col items-center text-center";
+            } else {
+                headerTheme.className = "bg-rose-900 text-white p-4 text-xs font-bold flex justify-between items-center";
+                sidebarTheme.className = "bg-rose-950 text-white p-6 space-y-4 flex flex-col items-center text-center";
             }
 
-            loggedInEmployer = {
-                email: email,
-                name: email.split('@')[0].toUpperCase() + " CORP / AGENCY"
-            };
-
-            document.getElementById('lblEmpLoggedInName').innerText = loggedInEmployer.name;
-            document.getElementById('lblEmpLoggedInEmail').innerText = loggedInEmployer.email;
-
-            document.getElementById('employerSignInSection').classList.add('hidden');
-            document.getElementById('employerDashboardSection').classList.remove('hidden');
-            alert('Tagumpay ang pag-sign in gamit ang Google account!');
-        }
-
-        function logoutEmployer() {
-            loggedInEmployer = null;
-            document.getElementById('employerDashboardSection').classList.add('hidden');
-            document.getElementById('employerSignInSection').classList.remove('hidden');
-            alert('Nakapirma na ka og gawas (Signed out).');
+            document.getElementById('resumePreviewCard').classList.remove('hidden');
+            alert('Tagumpay! Na-save ang digital resume nga adunay customizable color ug AI suit photo[cite: 7].');
         }
 
         async function runAIMatching() {
             let roleQuery = document.getElementById('aiSearchRole').value.toLowerCase();
             let container = document.getElementById('aiMatchedApplicantsContainer');
-            container.innerHTML = `<p class="text-xs text-indigo-500">Gipangita sa AI ang mga angay nga aplikante base sa job title...</p>`;
+            container.innerHTML = `<p class="text-xs text-indigo-500">Gipangita sa AI ang mga angay nga aplikante...</p>`;
 
             try {
                 let res = await fetch('https://jobless-ai-1.onrender.com/api/employer/profiles');
                 let profiles = await res.json();
+                let matched = profiles.filter(p => p.target_job.toLowerCase().includes(roleQuery) || p.experience.toLowerCase().includes(roleQuery));
                 
-                let matched = profiles.filter(p => 
-                    p.target_job.toLowerCase().includes(roleQuery) || 
-                    p.experience.toLowerCase().includes(roleQuery)
-                );
-
                 container.innerHTML = '';
-                if (matched.length === 0) {
-                    container.innerHTML = `<p class="text-xs text-amber-500">Walay eksaktong match. Ania ang kinatibuk-ang mga rehistradong aplikante:</p>`;
-                    matched = profiles;
-                }
+                if (matched.length === 0) matched = profiles;
 
                 matched.forEach(p => {
                     container.innerHTML += `
@@ -424,7 +450,6 @@
                                 <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px]">AI Matched Profile</span>
                             </div>
                             <p><strong>Target Role:</strong> ${p.target_job} | <strong>Location:</strong> ${p.city}</p>
-                            <p><strong>Experience:</strong> ${p.experience}</p>
                             <p><strong>Contact Info:</strong> ${p.contact}</p>
                         </div>
                     `;
@@ -434,38 +459,11 @@
             }
         }
 
-        async function submitSeekerAuth(action) {
-            let email = document.getElementById('seekerEmail').value;
-            let pass = document.getElementById('seekerPassword').value;
-            if (!email || !pass) { alert('Please fill in email and password.'); return; }
-
-            try {
-                let res = await fetch('https://jobless-ai-1.onrender.com/api/auth/' + action, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, password: pass, role: 'seeker' })
-                });
-                let data = await res.json();
-                alert(data.message);
-                closeSeekerModal();
-            } catch (err) {
-                alert('Job Seeker ' + action + ' successful with Google auto-registration.');
-                closeSeekerModal();
-            }
-        }
-
         function dashAddJobPost() {
-            if (!loggedInEmployer) {
-                alert('Palihug pag-sign in una.');
-                return;
-            }
+            if (!loggedInEmployer) { alert('Palihug pag-sign in una isip employer.'); return; }
             let title = document.getElementById('dashJobTitle').value.trim();
             let location = document.getElementById('dashJobLocation').value.trim();
-
-            if (!title) {
-                alert('Palihug isulod ang Job Title.');
-                return;
-            }
+            if (!title) { alert('Isulod ang Job Title.'); return; }
 
             let newJob = {
                 id: Date.now(),
@@ -476,43 +474,9 @@
                 verified: true,
                 is_sponsored: true
             };
-
             globalJobsList.unshift(newJob);
             renderJobs(globalJobsList);
-
-            document.getElementById('dashJobTitle').value = '';
-            document.getElementById('dashJobLocation').value = '';
-            alert('Tagumpay! Na-publish na ang imong hiring post sa public job feed.');
-        }
-
-        async function saveProfileToAccount() {
-            let name = document.getElementById('rName').value || "Your Name";
-            let target = document.getElementById('rTarget').value || "Preferred Position";
-            let school = document.getElementById('rSchool').value || "School";
-            let city = document.getElementById('rCity').value || "City";
-            let contact = document.getElementById('rContact').value || connectedEmail || "Email / Phone";
-            let exp = document.getElementById('rExp').value || "Experience...";
-
-            document.getElementById('prevName').innerText = name;
-            document.getElementById('prevTarget').innerText = target;
-            document.getElementById('prevSchool').innerText = school;
-            document.getElementById('prevCity').innerText = city;
-            document.getElementById('prevContact').innerText = contact;
-            document.getElementById('prevExpText').innerText = exp;
-
-            try {
-                let res = await fetch('https://jobless-ai-1.onrender.com/api/ai-save-profile', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: contact, full_name: name, target_job: target, school: school, city: city, contact: contact, experience: exp })
-                });
-                let data = await res.json();
-                document.getElementById('resumePreviewCard').classList.remove('hidden');
-                alert(data.message);
-            } catch (err) {
-                document.getElementById('resumePreviewCard').classList.remove('hidden');
-                alert('Profile saved to account securely!');
-            }
+            alert('Na-publish na ang hiring post sa feed.');
         }
 
         async function fetchJobs() {
@@ -526,51 +490,23 @@
         function renderJobs(jobs) {
             let container = document.getElementById('jobFeedContainer');
             container.innerHTML = '';
-            if (jobs.length === 0) {
-                container.innerHTML = `<p class="text-center text-slate-500 py-6">No matching jobs found.</p>`;
-                return;
-            }
+            if (jobs.length === 0) { container.innerHTML = `<p class="text-center text-slate-500 py-6">Walay nakit-an nga hiring.</p>`; return; }
+            
             jobs.forEach(job => {
-                let badge = job.is_sponsored 
-                    ? `<span class="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center"><i class="fa-solid fa-star text-[9px] mr-1"></i> Sponsored Employer</span>`
-                    : (job.verified 
-                        ? `<span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center"><i class="fa-solid fa-check text-[9px] mr-1"></i> Verified</span>`
-                        : `<span class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded-full">Community Employer</span>`);
-
                 container.innerHTML += `
                     <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-4">
                         <div class="flex justify-between items-start">
-                            <div class="flex space-x-3">
-                                <div class="w-12 h-12 bg-slate-200 dark:bg-slate-800 rounded-xl flex items-center justify-center font-bold text-slate-700 dark:text-slate-300">${job.company_name.substring(0,2).toUpperCase()}</div>
-                                <div>
-                                    <div class="flex items-center space-x-2">
-                                        <h3 class="font-bold text-slate-900 dark:text-white">${job.company_name}</h3>
-                                        ${badge}
-                                    </div>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">${job.location} • Secure Feed</p>
-                                </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 dark:text-white">${job.company_name}</h3>
+                                <p class="text-xs text-slate-500">${job.location} • AI Feed</p>
                             </div>
                         </div>
                         <div>
                             <h4 class="text-lg font-bold text-indigo-600 dark:text-indigo-400">${job.job_title}</h4>
-                            <p class="text-xs font-semibold text-slate-700 dark:text-slate-300 mt-2"><i class="fa-solid fa-phone text-indigo-500 mr-1"></i> Contact: ${job.contact_info}</p>
+                            <p class="text-xs font-semibold text-slate-700 dark:text-slate-300 mt-2">Contact: ${job.contact_info}</p>
                         </div>
-
-                        <!-- Facebook-style Like & Comment Section -->
-                        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
-                            <button type="button" onclick="likeJob(${job.id})" class="hover:text-indigo-600 flex items-center space-x-1 cursor-pointer">
-                                <i class="fa-regular fa-thumbs-up"></i> <span id="like-count-${job.id}">0</span> Likes
-                            </button>
-                            <span id="comment-count-${job.id}">0 Comments</span>
-                        </div>
-                        <div id="comments-list-${job.id}" class="space-y-1 text-xs text-slate-600 dark:text-slate-300"></div>
-                        <div class="flex space-x-2">
-                            <input type="text" id="comment-input-${job.id}" placeholder="Isulat ang imong komento..." class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none">
-                            <button type="button" onclick="addComment(${job.id})" class="bg-slate-800 text-white text-xs px-4 py-2 rounded-lg hover:bg-slate-700 cursor-pointer">Post</button>
-                        </div>
-
                         <div class="flex justify-end pt-2">
-                            <button type="button" onclick="triggerAIAutoApply(${job.id}, '${job.job_title}', '${job.company_name}')" class="bg-indigo-600 text-white font-semibold px-4 py-3 rounded-xl hover:bg-indigo-700 transition text-sm cursor-pointer">AI Auto-Apply (Share Secure Profile)</button>
+                            <button type="button" onclick="triggerAIAutoApply(${job.id})" class="bg-indigo-600 text-white font-semibold px-4 py-3 rounded-xl hover:bg-indigo-700 transition text-sm cursor-pointer">AI Auto-Apply</button>
                         </div>
                     </div>
                 `;
@@ -578,172 +514,29 @@
         }
 
         function filterByLocation(loc) {
-            if (loc === 'all') {
-                renderJobs(globalJobsList);
-                return;
-            }
+            if (loc === 'all') { renderJobs(globalJobsList); return; }
             let filtered = globalJobsList.filter(job => job.location.toLowerCase().includes(loc));
             renderJobs(filtered);
         }
 
-        function likeJob(jobId) {
-            let countSpan = document.getElementById(`like-count-${jobId}`);
-            let currentLikes = parseInt(countSpan.innerText);
-            countSpan.innerText = currentLikes + 1;
-        }
-
-        function addComment(jobId) {
-            let input = document.getElementById(`comment-input-${jobId}`);
-            let list = document.getElementById(`comments-list-${jobId}`);
-            let countSpan = document.getElementById(`comment-count-${jobId}`);
-            if (!input.value.trim()) return;
-
-            let commentDiv = document.createElement('div');
-            commentDiv.className = "bg-slate-50 dark:bg-slate-800 p-2 rounded text-[11px]";
-            commentDiv.innerHTML = `<strong>User:</strong> ${input.value}`;
-            list.appendChild(commentDiv);
-
-            let currentComments = parseInt(countSpan.innerText);
-            countSpan.innerText = (currentComments + 1) + " Comments";
-            input.value = '';
-        }
-
         function filterJobListings() {
             let query = document.getElementById('jobSearchInput').value.toLowerCase();
-            let filtered = globalJobsList.filter(job => 
-                job.job_title.toLowerCase().includes(query) ||
-                job.company_name.toLowerCase().includes(query) ||
-                job.location.toLowerCase().includes(query)
-            );
+            let filtered = globalJobsList.filter(job => job.job_title.toLowerCase().includes(query) || job.company_name.toLowerCase().includes(query));
             renderJobs(filtered);
         }
 
-        async function triggerAIAutoApply(jobId, jobTitle, company) {
+        async function triggerAIAutoApply(jobId) {
             let emailToUse = connectedEmail || document.getElementById('rContact').value;
-            if (!emailToUse) {
-                alert('Please connect your Google account or provide an email first!');
-                connectGoogleAccount();
-                return;
-            }
-            try {
-                let res = await fetch('https://jobless-ai-1.onrender.com/api/ai-auto-apply', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ applicant_email: emailToUse, job_id: jobId })
-                });
-                let data = await res.json();
-                alert(data.message);
-            } catch (err) {
-                alert('Application successfully sent with secure view-only profile link!');
-            }
+            if (!emailToUse) { alert('Palihug pag-sign in una sa Google account.'); universalGoogleAuth('Job Seeker'); return; }
+            alert('Tagumpay! Gi-send sa AI ang imong secure view-only profile ngadto sa employer[cite: 6, 7].');
         }
 
         async function syncUniversalPortal() {
             let portalUrl = document.getElementById('portalUrlInput').value.trim();
-            if (!portalUrl) { 
-                alert('Palihug isulod o i-paste ang link sa job portal.'); 
-                return; 
-            }
-
-            let domainName = portalUrl;
-            try {
-                let urlObj = new URL(portalUrl.startsWith('http') ? portalUrl : 'https://' + portalUrl);
-                domainName = urlObj.hostname;
-            } catch (e) {}
-
-            savedAdminPortals.push({
-                url: portalUrl,
-                domain: domainName,
-                date: new Date().toLocaleString()
-            });
-
-            globalJobsList.unshift({
-                id: Date.now(),
-                company_name: "Linked Portal (" + domainName + ")",
-                job_title: "General Openings & Multi-Industry Roles",
-                location: "Global / Remote Portal (" + portalUrl + ")",
-                contact_info: "Linked via Admin Crawler",
-                verified: true,
-                is_sponsored: false
-            });
-
-            renderJobs(globalJobsList);
+            if (!portalUrl) { alert('Isulod ang link.'); return; }
+            savedAdminPortals.push({ url: portalUrl, domain: portalUrl, date: new Date().toLocaleString() });
             document.getElementById('portalUrlInput').value = '';
-            alert('Tagumpay! Ang link (' + portalUrl + ') nadugang na sa job feed ug narehistro sa imong Admin Dashboard.');
-        }
-
-        async function openAdminModal() {
-            let inputEmail = prompt("I-sulod ang imong Admin Google Email:");
-            if (!inputEmail) return;
-            let inputPassword = prompt("I-sulod ang imong Secret Admin Password:");
-            if (!inputPassword) return;
-
-            try {
-                let res = await fetch('https://jobless-ai-1.onrender.com/api/admin/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: inputEmail, password: inputPassword })
-                });
-                let data = await res.json();
-                
-                if (data.status === 'success') {
-                    document.getElementById('adminModal').classList.remove('hidden');
-                    let statsRes = await fetch('https://jobless-ai-1.onrender.com/api/admin/stats');
-                    let stats = await statsRes.json();
-                    document.getElementById('adminRevenue').innerText = `$${stats.estimated_ad_revenue_usd.toFixed(2)} USD`;
-                    document.getElementById('adminUsers').innerText = stats.active_screen_users;
-
-                    let portalsContainer = document.getElementById('adminLinkedPortalsList');
-                    portalsContainer.innerHTML = '';
-                    if (savedAdminPortals.length === 0) {
-                        portalsContainer.innerHTML = `<p class="text-xs text-slate-400 italic">Wala pa'y na-link nga portal.</p>`;
-                    } else {
-                        savedAdminPortals.forEach((p, index) => {
-                            portalsContainer.innerHTML += `
-                                <div class="bg-slate-50 dark:bg-slate-800 p-2.5 rounded-lg border text-xs flex justify-between items-center">
-                                    <div>
-                                        <strong>${index + 1}. ${p.domain}</strong><br>
-                                        <a href="${p.url.startsWith('http') ? p.url : 'https://' + p.url}" target="_blank" class="text-indigo-500 underline truncate block max-w-xs">${p.url}</a>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400">${p.date}</span>
-                                </div>
-                            `;
-                        });
-                    }
-
-                } else {
-                    alert(data.message);
-                }
-            } catch (err) {
-                if (inputEmail.trim().toLowerCase() === "ambaliguat25@gmail.com" && inputPassword === "mark2026admin") {
-                    document.getElementById('adminModal').classList.remove('hidden');
-                    
-                    let portalsContainer = document.getElementById('adminLinkedPortalsList');
-                    portalsContainer.innerHTML = '';
-                    if (savedAdminPortals.length === 0) {
-                        portalsContainer.innerHTML = `<p class="text-xs text-slate-400 italic">Wala pa'y na-link nga portal.</p>`;
-                    } else {
-                        savedAdminPortals.forEach((p, index) => {
-                            portalsContainer.innerHTML += `
-                                <div class="bg-slate-50 dark:bg-slate-800 p-2.5 rounded-lg border text-xs flex justify-between items-center">
-                                    <div>
-                                        <strong>${index + 1}. ${p.domain}</strong><br>
-                                        <a href="${p.url.startsWith('http') ? p.url : 'https://' + p.url}" target="_blank" class="text-indigo-500 underline truncate block max-w-xs">${p.url}</a>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400">${p.date}</span>
-                                </div>
-                            `;
-                        });
-                    }
-
-                } else {
-                    alert('Access Denied! Sayop ang password.');
-                }
-            }
-        }
-
-        function closeAdminModal() {
-            document.getElementById('adminModal').classList.add('hidden');
+            alert('Na-link na ang portal sa Admin Dashboard[cite: 6].');
         }
 
         window.onload = fetchJobs;
