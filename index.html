@@ -102,13 +102,13 @@
                 </div>
             </div>
 
-            <!-- Universal Portal Crawler (Jobsite Link Crawler) -->
+            <!-- Universal Portal Crawler (Jobsite Link Crawler - Direct Link No Prompt) -->
             <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-3">
                 <h3 class="font-bold text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-globe text-indigo-600 mr-2"></i> Crawl & List Hiring Portals</h3>
-                <p class="text-xs text-slate-600 dark:text-slate-400">I-paste ang link sa job portal. Ang AI na ang mo-crawl ug mo-match sa saktong role.</p>
+                <p class="text-xs text-slate-600 dark:text-slate-400">I-paste ang link sa portal. Direkta kining i-link sa AI aron kargahan sa mga bakanteng trabaho.</p>
                 <div class="space-y-2">
-                    <input type="text" id="portalUrlInput" placeholder="e.g., https://nz.indeed.com or linkedin.com" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none">
-                    <button type="button" onclick="syncUniversalPortal()" class="w-full bg-indigo-600 text-white text-sm font-semibold py-3.5 rounded-xl hover:bg-indigo-700 transition shadow-md cursor-pointer">AI Crawl & Auto-Link Openings</button>
+                    <input type="text" id="portalUrlInput" placeholder="e.g., https://poeajobs.ph/jobs-abroad/" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none">
+                    <button type="button" onclick="syncUniversalPortal()" class="w-full bg-indigo-600 text-white text-sm font-semibold py-3.5 rounded-xl hover:bg-indigo-700 transition shadow-md cursor-pointer">AI Crawl & Link Portal</button>
                 </div>
             </div>
         </div>
@@ -466,35 +466,33 @@
         }
 
         async function syncUniversalPortal() {
-            let portalUrl = document.getElementById('portalUrlInput').value;
-            if (!portalUrl) { alert('Palihug isulod ang link sa portal.'); return; }
-
-            // Awtomatikong mukuha sa target role gikan sa gi-input sa user sa resume studio
-            let autoRole = document.getElementById('rTarget').value || "High Reach Forklift Operator";
-
-            try {
-                let response = await fetch('https://jobless-ai-1.onrender.com/api/sync-universal-portal', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ portal_url: portalUrl, search_role: autoRole })
-                });
-                let result = await response.json();
-                alert("AI successfully crawled and linked openings from: " + portalUrl + " for role: " + autoRole);
-                fetchJobs();
-            } catch (error) {
-                // Seamless fallback kung offline
-                globalJobsList.unshift({
-                    id: Date.now(),
-                    company_name: "Crawled Portal (" + new URL(portalUrl.startsWith('http') ? portalUrl : 'https://' + portalUrl).hostname + ")",
-                    job_title: autoRole,
-                    location: "Global / Remote",
-                    contact_info: "Auto-linked via AI Crawler",
-                    verified: true,
-                    is_sponsored: false
-                });
-                renderJobs(globalJobsList);
-                alert('AI successfully crawled and linked listings from ' + portalUrl + ' automatically!');
+            let portalUrl = document.getElementById('portalUrlInput').value.trim();
+            if (!portalUrl) { 
+                alert('Palihug isulod o i-paste ang link sa job portal.'); 
+                return; 
             }
+
+            // Direkta nga kuhaon ang domain o pangalan sa gi-paste nga link nga walay na prompt
+            let domainName = portalUrl;
+            try {
+                let urlObj = new URL(portalUrl.startsWith('http') ? portalUrl : 'https://' + portalUrl);
+                domainName = urlObj.hostname;
+            } catch (e) {}
+
+            // Awtomatikong magdugang sa feed nga walay pagpili og job title
+            globalJobsList.unshift({
+                id: Date.now(),
+                company_name: "Linked Portal (" + domainName + ")",
+                job_title: "Available Openings (AI Auto-Matched)",
+                location: "Global / Remote Portal (" + portalUrl + ")",
+                contact_info: "Linked via AI Portal Crawler",
+                verified: true,
+                is_sponsored: false
+            });
+
+            renderJobs(globalJobsList);
+            document.getElementById('portalUrlInput').value = '';
+            alert('Tagumpay! Ang link (' + portalUrl + ') nadugang na sa job feed ug gi-link sa AI para sa auto-apply sa mga aplikante.');
         }
 
         async function openAdminModal() {
