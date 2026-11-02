@@ -78,7 +78,7 @@
                     </div>
                     <div>
                         <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Target Position</label>
-                        <input type="text" id="rTarget" placeholder="Any Preferred Position" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                        <input type="text" id="rTarget" placeholder="Preferred Position" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
                     </div>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
@@ -102,10 +102,10 @@
                 </div>
             </div>
 
-            <!-- Universal Portal Crawler (No Role restriction, saved directly for Admin view) -->
+            <!-- Universal Portal Crawler (Admin Link Saver) -->
             <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-3">
                 <h3 class="font-bold text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-globe text-indigo-600 mr-2"></i> Crawl & Link Job Portals</h3>
-                <p class="text-xs text-slate-600 dark:text-slate-400">I-paste ang link sa bisan unsang job portal. Direktang ma-save kini sa imong Admin Dashboard.</p>
+                <p class="text-xs text-slate-600 dark:text-slate-400">I-paste ang link sa bisan unsang job portal. Diretso kining ma-save sa imong Admin Dashboard.</p>
                 <div class="space-y-2">
                     <input type="text" id="portalUrlInput" placeholder="e.g., https://poeajobs.ph/jobs-abroad/" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none">
                     <button type="button" onclick="syncUniversalPortal()" class="w-full bg-indigo-600 text-white text-sm font-semibold py-3.5 rounded-xl hover:bg-indigo-700 transition shadow-md cursor-pointer">Save & Link Portal to Admin</button>
@@ -192,7 +192,7 @@
                 <button type="button" onclick="closeEmployerPortal()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="space-y-4">
-                <p class="text-xs text-slate-500 dark:text-slate-400">Secure View-Only Profiles of Job Seekers. No direct file downloads allowed.</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Secure View-Only Profiles of Job Seekers[cite: 7]. No direct file downloads allowed.</p>
                 <div id="employerProfilesContainer" class="space-y-3">
                     <p class="text-xs text-slate-500">Loading applicant profiles...</p>
                 </div>
@@ -200,7 +200,7 @@
         </div>
     </div>
 
-    <!-- Admin Dashboard Modal (Naay apil nga listahan sa tanan gi-link nga job portals nga ikaw ra ang kakita) -->
+    <!-- Admin Dashboard Modal -->
     <div id="adminModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-6 space-y-5 shadow-xl border dark:border-slate-800 max-h-[85vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b dark:border-slate-800 pb-3">
@@ -243,7 +243,7 @@
         let currentAuthRole = 'seeker';
         let adminOwnerEmail = "ambaliguat25@gmail.com";
         let globalJobsList = [];
-        let savedAdminPortals = []; // Tago nga listahan para sa admin dashboard
+        let savedAdminPortals = [];
 
         function toggleDarkMode() {
             let htmlRoot = document.getElementById('htmlRoot');
@@ -490,14 +490,12 @@
                 domainName = urlObj.hostname;
             } catch (e) {}
 
-            // I-save sa pribadong listahan para sa Admin Dashboard
             savedAdminPortals.push({
                 url: portalUrl,
                 domain: domainName,
                 date: new Date().toLocaleString()
             });
 
-            // I-dugang sa tibuok feed nga walay pili-pili og rol (general job opening)
             globalJobsList.unshift({
                 id: Date.now(),
                 company_name: "Linked Portal (" + domainName + ")",
@@ -534,7 +532,6 @@
                     document.getElementById('adminRevenue').innerText = `$${stats.estimated_ad_revenue_usd.toFixed(2)} USD`;
                     document.getElementById('adminUsers').innerText = stats.active_screen_users;
 
-                    // I-load ang listahan sa mga gi-link nga portals sa admin dashboard
                     let portalsContainer = document.getElementById('adminLinkedPortalsList');
                     portalsContainer.innerHTML = '';
                     if (savedAdminPortals.length === 0) {
