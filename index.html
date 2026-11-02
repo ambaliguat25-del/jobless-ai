@@ -34,7 +34,7 @@
                 <a href="#feed" class="hover:text-indigo-400">Job Feed</a>
                 <button type="button" onclick="openAuthModal('seeker')" class="text-indigo-300 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-user mr-1"></i> Seeker Portal</button>
                 <button type="button" onclick="openEmployerPortal()" class="text-emerald-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-user-tie mr-1"></i> Employer Portal</button>
-                <button type="button" onclick="openAdminModal()" class="text-amber-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-lock mr-1"></i> Admin</button>
+                <button type="button" onclick="openAdminModal()" class="text-amber-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-lock mr-1"></i> Admin Dashboard</button>
                 <button type="button" onclick="toggleDarkMode()" class="bg-slate-800 p-2 rounded-xl text-yellow-400 hover:bg-slate-700 transition cursor-pointer">
                     <i id="darkModeIcon" class="fa-solid fa-moon"></i>
                 </button>
@@ -78,7 +78,7 @@
                     </div>
                     <div>
                         <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Target Position</label>
-                        <input type="text" id="rTarget" placeholder="High Reach Forklift Operator" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
+                        <input type="text" id="rTarget" placeholder="Any Preferred Position" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1">
                     </div>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
@@ -96,19 +96,19 @@
                     </div>
                     <div>
                         <label class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Work Experience & Skills</label>
-                        <textarea id="rExp" rows="2" placeholder="Operated Jungheinrich ETR 335D reach trucks..." class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1"></textarea>
+                        <textarea id="rExp" rows="2" placeholder="Skills and work background..." class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none mt-1"></textarea>
                     </div>
                     <button type="button" onclick="saveProfileToAccount()" class="w-full bg-indigo-600 text-white text-xs font-bold py-3 rounded-xl hover:bg-indigo-700 transition shadow-sm cursor-pointer">Save Profile to Account</button>
                 </div>
             </div>
 
-            <!-- Universal Portal Crawler (Jobsite Link Crawler - Direct Link No Prompt) -->
+            <!-- Universal Portal Crawler (No Role restriction, saved directly for Admin view) -->
             <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-3">
-                <h3 class="font-bold text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-globe text-indigo-600 mr-2"></i> Crawl & List Hiring Portals</h3>
-                <p class="text-xs text-slate-600 dark:text-slate-400">I-paste ang link sa portal. Direkta kining i-link sa AI aron kargahan sa mga bakanteng trabaho.</p>
+                <h3 class="font-bold text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-globe text-indigo-600 mr-2"></i> Crawl & Link Job Portals</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-400">I-paste ang link sa bisan unsang job portal. Direktang ma-save kini sa imong Admin Dashboard.</p>
                 <div class="space-y-2">
                     <input type="text" id="portalUrlInput" placeholder="e.g., https://poeajobs.ph/jobs-abroad/" class="w-full bg-slate-100 dark:bg-slate-800 text-xs px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none">
-                    <button type="button" onclick="syncUniversalPortal()" class="w-full bg-indigo-600 text-white text-sm font-semibold py-3.5 rounded-xl hover:bg-indigo-700 transition shadow-md cursor-pointer">AI Crawl & Link Portal</button>
+                    <button type="button" onclick="syncUniversalPortal()" class="w-full bg-indigo-600 text-white text-sm font-semibold py-3.5 rounded-xl hover:bg-indigo-700 transition shadow-md cursor-pointer">Save & Link Portal to Admin</button>
                 </div>
             </div>
         </div>
@@ -141,7 +141,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-rose-900 dark:text-rose-400 uppercase tracking-wider border-b pb-1 mb-2">Work Experience</h4>
-                            <p id="prevExpText" class="text-slate-700 dark:text-slate-300">Warehouse operations and high-reach forklift driving.</p>
+                            <p id="prevExpText" class="text-slate-700 dark:text-slate-300">Warehouse operations and general background.</p>
                         </div>
                     </div>
                 </div>
@@ -200,21 +200,32 @@
         </div>
     </div>
 
-    <!-- Admin Modal -->
+    <!-- Admin Dashboard Modal (Naay apil nga listahan sa tanan gi-link nga job portals nga ikaw ra ang kakita) -->
     <div id="adminModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-xl w-full p-6 space-y-5 shadow-xl border dark:border-slate-800">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-6 space-y-5 shadow-xl border dark:border-slate-800 max-h-[85vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b dark:border-slate-800 pb-3">
                 <h3 class="font-bold text-lg text-slate-900 dark:text-white"><i class="fa-solid fa-shield-halved text-amber-500 mr-2"></i> Owner Admin Dashboard</h3>
                 <button type="button" onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-            <div class="grid grid-cols-2 gap-4 text-center">
-                <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border">
-                    <span class="text-xs text-slate-500">Estimated Ad Revenue</span>
-                    <h4 id="adminRevenue" class="text-2xl font-extrabold text-green-600 mt-1">$0.00 USD</h4>
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border">
+                        <span class="text-xs text-slate-500">Estimated Ad Revenue</span>
+                        <h4 id="adminRevenue" class="text-2xl font-extrabold text-green-600 mt-1">$0.00 USD</h4>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border">
+                        <span class="text-xs text-slate-500">Active Screen Users</span>
+                        <h4 id="adminUsers" class="text-2xl font-extrabold text-indigo-600 mt-1">0</h4>
+                    </div>
                 </div>
-                <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border">
-                    <span class="text-xs text-slate-500">Active Screen Users</span>
-                    <h4 id="adminUsers" class="text-2xl font-extrabold text-indigo-600 mt-1">0</h4>
+
+                <!-- Admin Private Portals List -->
+                <div class="space-y-2 pt-2 border-t dark:border-slate-800">
+                    <h4 class="font-bold text-sm text-slate-900 dark:text-white"><i class="fa-solid fa-link text-indigo-500 mr-1"></i> Lista sa Gi-link nga Job Portals (Pribado para sa Admin)</h4>
+                    <p class="text-xs text-slate-500">Kining mga portala mao ang gi-link nimo aron kargahan sa feed sa mga aplikante.</p>
+                    <div id="adminLinkedPortalsList" class="space-y-2 max-h-48 overflow-y-auto">
+                        <p class="text-xs text-slate-400 italic">Wala pa'y na-link nga portal.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -232,6 +243,7 @@
         let currentAuthRole = 'seeker';
         let adminOwnerEmail = "ambaliguat25@gmail.com";
         let globalJobsList = [];
+        let savedAdminPortals = []; // Tago nga listahan para sa admin dashboard
 
         function toggleDarkMode() {
             let htmlRoot = document.getElementById('htmlRoot');
@@ -282,7 +294,7 @@
 
         async function saveProfileToAccount() {
             let name = document.getElementById('rName').value || "Your Name";
-            let target = document.getElementById('rTarget').value || "Target Position";
+            let target = document.getElementById('rTarget').value || "Preferred Position";
             let school = document.getElementById('rSchool').value || "School";
             let city = document.getElementById('rCity').value || "City";
             let contact = document.getElementById('rContact').value || "Email / Phone";
@@ -472,27 +484,33 @@
                 return; 
             }
 
-            // Direkta nga kuhaon ang domain o pangalan sa gi-paste nga link nga walay na prompt
             let domainName = portalUrl;
             try {
                 let urlObj = new URL(portalUrl.startsWith('http') ? portalUrl : 'https://' + portalUrl);
                 domainName = urlObj.hostname;
             } catch (e) {}
 
-            // Awtomatikong magdugang sa feed nga walay pagpili og job title
+            // I-save sa pribadong listahan para sa Admin Dashboard
+            savedAdminPortals.push({
+                url: portalUrl,
+                domain: domainName,
+                date: new Date().toLocaleString()
+            });
+
+            // I-dugang sa tibuok feed nga walay pili-pili og rol (general job opening)
             globalJobsList.unshift({
                 id: Date.now(),
                 company_name: "Linked Portal (" + domainName + ")",
-                job_title: "Available Openings (AI Auto-Matched)",
+                job_title: "General Openings & Multi-Industry Roles",
                 location: "Global / Remote Portal (" + portalUrl + ")",
-                contact_info: "Linked via AI Portal Crawler",
+                contact_info: "Linked via Admin Crawler",
                 verified: true,
                 is_sponsored: false
             });
 
             renderJobs(globalJobsList);
             document.getElementById('portalUrlInput').value = '';
-            alert('Tagumpay! Ang link (' + portalUrl + ') nadugang na sa job feed ug gi-link sa AI para sa auto-apply sa mga aplikante.');
+            alert('Tagumpay! Ang link (' + portalUrl + ') nadugang na sa job feed ug narehistro sa imong Admin Dashboard.');
         }
 
         async function openAdminModal() {
@@ -515,12 +533,51 @@
                     let stats = await statsRes.json();
                     document.getElementById('adminRevenue').innerText = `$${stats.estimated_ad_revenue_usd.toFixed(2)} USD`;
                     document.getElementById('adminUsers').innerText = stats.active_screen_users;
+
+                    // I-load ang listahan sa mga gi-link nga portals sa admin dashboard
+                    let portalsContainer = document.getElementById('adminLinkedPortalsList');
+                    portalsContainer.innerHTML = '';
+                    if (savedAdminPortals.length === 0) {
+                        portalsContainer.innerHTML = `<p class="text-xs text-slate-400 italic">Wala pa'y na-link nga portal.</p>`;
+                    } else {
+                        savedAdminPortals.forEach((p, index) => {
+                            portalsContainer.innerHTML += `
+                                <div class="bg-slate-50 dark:bg-slate-800 p-2.5 rounded-lg border text-xs flex justify-between items-center">
+                                    <div>
+                                        <strong>${index + 1}. ${p.domain}</strong><br>
+                                        <a href="${p.url.startsWith('http') ? p.url : 'https://' + p.url}" target="_blank" class="text-indigo-500 underline truncate block max-w-xs">${p.url}</a>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400">${p.date}</span>
+                                </div>
+                            `;
+                        });
+                    }
+
                 } else {
                     alert(data.message);
                 }
             } catch (err) {
                 if (inputEmail.trim().toLowerCase() === "ambaliguat25@gmail.com" && inputPassword === "mark2026admin") {
                     document.getElementById('adminModal').classList.remove('hidden');
+                    
+                    let portalsContainer = document.getElementById('adminLinkedPortalsList');
+                    portalsContainer.innerHTML = '';
+                    if (savedAdminPortals.length === 0) {
+                        portalsContainer.innerHTML = `<p class="text-xs text-slate-400 italic">Wala pa'y na-link nga portal.</p>`;
+                    } else {
+                        savedAdminPortals.forEach((p, index) => {
+                            portalsContainer.innerHTML += `
+                                <div class="bg-slate-50 dark:bg-slate-800 p-2.5 rounded-lg border text-xs flex justify-between items-center">
+                                    <div>
+                                        <strong>${index + 1}. ${p.domain}</strong><br>
+                                        <a href="${p.url.startsWith('http') ? p.url : 'https://' + p.url}" target="_blank" class="text-indigo-500 underline truncate block max-w-xs">${p.url}</a>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400">${p.date}</span>
+                                </div>
+                            `;
+                        });
+                    }
+
                 } else {
                     alert('Access Denied! Sayop ang password.');
                 }
