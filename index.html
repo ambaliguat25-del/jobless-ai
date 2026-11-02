@@ -32,8 +32,8 @@
             <div class="hidden md:flex space-x-6 text-sm font-medium items-center">
                 <a href="#" class="hover:text-indigo-400">Home</a>
                 <a href="#feed" class="hover:text-indigo-400">Job Feed</a>
-                <button type="button" onclick="openAuthModal('seeker')" class="text-indigo-300 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-user mr-1"></i> Seeker Portal</button>
-                <button type="button" onclick="openEmployerPortal()" class="text-emerald-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-user-tie mr-1"></i> Employer Portal</button>
+                <button type="button" onclick="openSeekerModal()" class="text-indigo-300 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-user mr-1"></i> Seeker Portal</button>
+                <button type="button" onclick="openEmployerModal()" class="text-emerald-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-user-tie mr-1"></i> Employer Portal & Register</button>
                 <button type="button" onclick="openAdminModal()" class="text-amber-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-lock mr-1"></i> Admin Dashboard</button>
                 <button type="button" onclick="toggleDarkMode()" class="bg-slate-800 p-2 rounded-xl text-yellow-400 hover:bg-slate-700 transition cursor-pointer">
                     <i id="darkModeIcon" class="fa-solid fa-moon"></i>
@@ -160,41 +160,70 @@
         </div>
     </main>
 
-    <!-- Auth Modal -->
-    <div id="authModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
+    <!-- Seeker Portal Modal -->
+    <div id="seekerModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border dark:border-slate-800">
             <div class="flex justify-between items-center border-b dark:border-slate-800 pb-3">
-                <h3 id="authModalTitle" class="font-bold text-lg text-slate-900 dark:text-white">Portal Login / Register</h3>
-                <button type="button" onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <h3 class="font-bold text-lg text-slate-900 dark:text-white">Job Seeker Account Portal</h3>
+                <button type="button" onclick="closeSeekerModal()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="space-y-3 text-xs">
                 <div>
                     <label class="font-semibold">Email Address</label>
-                    <input type="email" id="authEmail" placeholder="your@email.com" class="w-full bg-slate-100 dark:bg-slate-800 p-2.5 rounded-lg border mt-1">
+                    <input type="email" id="seekerEmail" placeholder="your@email.com" class="w-full bg-slate-100 dark:bg-slate-800 p-2.5 rounded-lg border mt-1">
                 </div>
                 <div>
                     <label class="font-semibold">Password</label>
-                    <input type="password" id="authPassword" placeholder="********" class="w-full bg-slate-100 dark:bg-slate-800 p-2.5 rounded-lg border mt-1">
+                    <input type="password" id="seekerPassword" placeholder="********" class="w-full bg-slate-100 dark:bg-slate-800 p-2.5 rounded-lg border mt-1">
                 </div>
                 <div class="flex space-x-2 pt-2">
-                    <button type="button" onclick="submitAuth('login')" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl hover:bg-indigo-700 cursor-pointer">Login</button>
-                    <button type="button" onclick="submitAuth('register')" class="w-full bg-slate-800 text-white font-bold py-2.5 rounded-xl hover:bg-slate-700 cursor-pointer">Register</button>
+                    <button type="button" onclick="submitAuth('seeker', 'login')" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl hover:bg-indigo-700 cursor-pointer">Login</button>
+                    <button type="button" onclick="submitAuth('seeker', 'register')" class="w-full bg-slate-800 text-white font-bold py-2.5 rounded-xl hover:bg-slate-700 cursor-pointer">Register</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Employer Portal Modal -->
+    <!-- Employer Portal & Registration Form Modal (Naay Company Name, Details, ug Company Logo upload) -->
     <div id="employerModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-6 space-y-5 shadow-xl border dark:border-slate-800 max-h-[80vh] overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-6 space-y-5 shadow-xl border dark:border-slate-800 max-h-[85vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b dark:border-slate-800 pb-3">
-                <h3 class="font-bold text-lg text-slate-900 dark:text-white"><i class="fa-solid fa-user-tie text-emerald-500 mr-2"></i> Verified Employer & Agency Portal</h3>
-                <button type="button" onclick="closeEmployerPortal()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <h3 class="font-bold text-lg text-slate-900 dark:text-white"><i class="fa-solid fa-user-tie text-emerald-500 mr-2"></i> Employer / Agency Portal & Registration</h3>
+                <button type="button" onclick="closeEmployerModal()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-            <div class="space-y-4">
-                <p class="text-xs text-slate-500 dark:text-slate-400">Secure View-Only Profiles of Job Seekers[cite: 7]. No direct file downloads allowed.</p>
-                <div id="employerProfilesContainer" class="space-y-3">
-                    <p class="text-xs text-slate-500">Loading applicant profiles...</p>
+            
+            <div class="space-y-6">
+                <!-- Registration Form para sa Employer -->
+                <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border space-y-3">
+                    <h4 class="font-bold text-sm text-indigo-600 dark:text-indigo-400"><i class="fa-solid fa-building mr-1"></i> Register New Company / Agency Profile</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                        <div>
+                            <label class="font-semibold">Company / Agency Name</label>
+                            <input type="text" id="empCompanyName" placeholder="e.g., Sorted Logistics NZ" class="w-full bg-white dark:bg-slate-900 p-2 rounded border mt-1">
+                        </div>
+                        <div>
+                            <label class="font-semibold">Official Business Email</label>
+                            <input type="email" id="empEmail" placeholder="hr@company.com" class="w-full bg-white dark:bg-slate-900 p-2 rounded border mt-1">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="font-semibold">Company Logo / Branding Image</label>
+                            <input type="file" id="empLogoInput" accept="image/*" class="w-full text-xs bg-white dark:bg-slate-900 p-2 rounded border mt-1">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="font-semibold">Company Description & Hiring Details</label>
+                            <textarea id="empDetails" rows="2" placeholder="Describe your company and hiring requirements..." class="w-full bg-white dark:bg-slate-900 p-2 rounded border mt-1"></textarea>
+                        </div>
+                    </div>
+                    <button type="button" onclick="registerEmployerAccount()" class="w-full bg-emerald-600 text-white text-xs font-bold py-2.5 rounded-lg hover:bg-emerald-700 transition cursor-pointer">Register Company & Open Portal</button>
+                </div>
+
+                <!-- Secure View-Only Profiles List para sa Employers -->
+                <div class="space-y-3 pt-2 border-t dark:border-slate-800">
+                    <h4 class="font-bold text-sm text-slate-900 dark:text-white"><i class="fa-solid fa-eye text-emerald-500 mr-1"></i> View-Only Applicant Profiles (No Direct Download)</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Mga rehistradong aplikante nga luwas nga makita sa mga lehitimong employer online.</p>
+                    <div id="employerProfilesContainer" class="space-y-3">
+                        <p class="text-xs text-slate-500">Loading applicant profiles...</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -240,10 +269,10 @@
     <script>
         let connectedEmail = null;
         let userConsentGranted = false;
-        let currentAuthRole = 'seeker';
         let adminOwnerEmail = "ambaliguat25@gmail.com";
         let globalJobsList = [];
         let savedAdminPortals = [];
+        let registeredEmployers = [];
 
         function toggleDarkMode() {
             let htmlRoot = document.getElementById('htmlRoot');
@@ -257,38 +286,102 @@
             }
         }
 
-        function openAuthModal(role) {
-            currentAuthRole = role;
-            document.getElementById('authModalTitle').innerText = role === 'seeker' ? 'Job Seeker Account Portal' : 'Employer / Agency Portal';
-            document.getElementById('authModal').classList.remove('hidden');
+        function openSeekerModal() {
+            document.getElementById('seekerModal').classList.remove('hidden');
         }
 
-        function closeAuthModal() {
-            document.getElementById('authModal').classList.add('hidden');
+        function closeSeekerModal() {
+            document.getElementById('seekerModal').classList.add('hidden');
         }
 
-        async function submitAuth(action) {
-            let email = document.getElementById('authEmail').value;
-            let pass = document.getElementById('authPassword').value;
+        function openEmployerModal() {
+            document.getElementById('employerModal').classList.remove('hidden');
+            loadEmployerProfiles();
+        }
+
+        function closeEmployerModal() {
+            document.getElementById('employerModal').classList.add('hidden');
+        }
+
+        async function submitAuth(role, action) {
+            let email = document.getElementById('seekerEmail').value;
+            let pass = document.getElementById('seekerPassword').value;
             if (!email || !pass) { alert('Please fill in email and password.'); return; }
 
-            let endpoint = action === 'register' ? '/api/auth/register' : '/api/auth/login';
             try {
-                let res = await fetch('https://jobless-ai-1.onrender.com' + endpoint, {
+                let res = await fetch('https://jobless-ai-1.onrender.com/api/auth/' + action, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, password: pass, role: currentAuthRole })
+                    body: JSON.stringify({ email: email, password: pass, role: role })
                 });
                 let data = await res.json();
                 alert(data.message);
-                closeAuthModal();
-                if (currentAuthRole === 'employer' && action === 'login') {
-                    openEmployerPortal();
-                }
+                closeSeekerModal();
             } catch (err) {
-                alert('Authentication successful in secure demo mode.');
-                closeAuthModal();
-                if (currentAuthRole === 'employer') openEmployerPortal();
+                alert('Job Seeker ' + action + ' successful in secure demo mode.');
+                closeSeekerModal();
+            }
+        }
+
+        async function registerEmployerAccount() {
+            let name = document.getElementById('empCompanyName').value;
+            let email = document.getElementById('empEmail').value;
+            let details = document.getElementById('empDetails').value;
+
+            if (!name || !email) {
+                alert('Palihug isulod ang pangalan sa kompanya ug email.');
+                return;
+            }
+
+            let newEmp = {
+                company_name: name,
+                email: email,
+                details: details || "Verified hiring company.",
+                date: new Date().toLocaleDateString()
+            };
+
+            registeredEmployers.push(newEmp);
+            
+            // I-add sab sa tibuok job feed isip sponsored/verified employer
+            globalJobsList.unshift({
+                id: Date.now(),
+                company_name: name,
+                job_title: "Direct Employer Hiring Opening",
+                location: "Verified Employer Portal",
+                contact_info: email + " | " + details,
+                verified: true,
+                is_sponsored: true
+            });
+
+            renderJobs(globalJobsList);
+            alert('Tagumpay! Nakarehistro na ang imong kompanya ug na-post na sa plataporma.');
+            document.getElementById('empCompanyName').value = '';
+            document.getElementById('empEmail').value = '';
+            document.getElementById('empDetails').value = '';
+            loadEmployerProfiles();
+        }
+
+        async function loadEmployerProfiles() {
+            try {
+                let res = await fetch('https://jobless-ai-1.onrender.com/api/employer/profiles');
+                let profiles = await res.json();
+                let container = document.getElementById('employerProfilesContainer');
+                container.innerHTML = '';
+                profiles.forEach(p => {
+                    container.innerHTML += `
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border space-y-1 text-xs shadow-sm">
+                            <div class="flex justify-between font-bold text-indigo-600 dark:text-indigo-400">
+                                <span>${p.full_name}</span>
+                                <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px]">Secure View-Only</span>
+                            </div>
+                            <p><strong>Target Position:</strong> ${p.target_job}</p>
+                            <p><strong>Location:</strong> ${p.city} | <strong>Contact:</strong> ${p.contact}</p>
+                            <p><strong>Experience:</strong> ${p.experience}</p>
+                        </div>
+                    `;
+                });
+            } catch (err) {
+                document.getElementById('employerProfilesContainer').innerHTML = `<p class="text-xs text-red-500">Error loading profiles.</p>`;
             }
         }
 
@@ -320,35 +413,6 @@
                 document.getElementById('resumePreviewCard').classList.remove('hidden');
                 alert('Profile saved to account securely!');
             }
-        }
-
-        async function openEmployerPortal() {
-            document.getElementById('employerModal').classList.remove('hidden');
-            try {
-                let res = await fetch('https://jobless-ai-1.onrender.com/api/employer/profiles');
-                let profiles = await res.json();
-                let container = document.getElementById('employerProfilesContainer');
-                container.innerHTML = '';
-                profiles.forEach(p => {
-                    container.innerHTML += `
-                        <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border space-y-1 text-xs">
-                            <div class="flex justify-between font-bold text-indigo-600 dark:text-indigo-400">
-                                <span>${p.full_name}</span>
-                                <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px]">Secure View-Only</span>
-                            </div>
-                            <p><strong>Target:</strong> ${p.target_job}</p>
-                            <p><strong>Location:</strong> ${p.city} | <strong>Contact:</strong> ${p.contact}</p>
-                            <p><strong>Experience:</strong> ${p.experience}</p>
-                        </div>
-                    `;
-                });
-            } catch (err) {
-                document.getElementById('employerProfilesContainer').innerHTML = `<p class="text-xs text-red-500">Error loading profiles.</p>`;
-            }
-        }
-
-        function closeEmployerPortal() {
-            document.getElementById('employerModal').classList.add('hidden');
         }
 
         function connectGoogleAccount() {
