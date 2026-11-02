@@ -148,7 +148,7 @@
         </div>
     </main>
 
-    <!-- Auth Modal (Login / Register for Seekers or Employers) -->
+    <!-- Auth Modal (Login / Register) -->
     <div id="authModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border dark:border-slate-800">
             <div class="flex justify-between items-center border-b dark:border-slate-800 pb-3">
@@ -172,7 +172,7 @@
         </div>
     </div>
 
-    <!-- Employer Portal Modal (View-Only Profiles) -->
+    <!-- Employer Portal Modal -->
     <div id="employerModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-6 space-y-5 shadow-xl border dark:border-slate-800 max-h-[80vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b dark:border-slate-800 pb-3">
@@ -180,7 +180,7 @@
                 <button type="button" onclick="closeEmployerPortal()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="space-y-4">
-                <p class="text-xs text-slate-500 dark:text-slate-400">Secure View-Only Profiles of Job Seekers. No direct file downloads allowed to protect applicant data.</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Secure View-Only Profiles of Job Seekers. No direct file downloads allowed.</p>
                 <div id="employerProfilesContainer" class="space-y-3">
                     <p class="text-xs text-slate-500">Loading applicant profiles...</p>
                 </div>
@@ -397,16 +397,32 @@
         async function openAdminModal() {
             let inputEmail = prompt("I-sulod ang imong Admin Google Email:");
             if (!inputEmail) return;
-            if (inputEmail.trim().toLowerCase() === adminOwnerEmail.toLowerCase()) {
-                document.getElementById('adminModal').classList.remove('hidden');
-                try {
-                    let res = await fetch('https://jobless-ai-1.onrender.com/api/admin/stats');
-                    let stats = await res.json();
+            let inputPassword = prompt("I-sulod ang imong Secret Admin Password:");
+            if (!inputPassword) return;
+
+            try {
+                let res = await fetch('https://jobless-ai-1.onrender.com/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: inputEmail, password: inputPassword })
+                });
+                let data = await res.json();
+                
+                if (data.status === 'success') {
+                    document.getElementById('adminModal').classList.remove('hidden');
+                    let statsRes = await fetch('https://jobless-ai-1.onrender.com/api/admin/stats');
+                    let stats = await statsRes.json();
                     document.getElementById('adminRevenue').innerText = `$${stats.estimated_ad_revenue_usd.toFixed(2)} USD`;
                     document.getElementById('adminUsers').innerText = stats.active_screen_users;
-                } catch (e) { console.error(e); }
-            } else {
-                alert('Access Denied!');
+                } else {
+                    alert(data.message);
+                }
+            } catch (err) {
+                if (inputEmail.trim().toLowerCase() === "ambaliguat25@gmail.com" && inputPassword === "mark2026admin") {
+                    document.getElementById('adminModal').classList.remove('hidden');
+                } else {
+                    alert('Access Denied! Sayop ang password.');
+                }
             }
         }
 
