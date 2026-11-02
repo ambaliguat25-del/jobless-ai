@@ -17,6 +17,10 @@ class UserRegister(BaseModel):
     password: str
     role: str # "seeker" o "employer"
 
+class AdminLogin(BaseModel):
+    email: str
+    password: str
+
 class ResumeProfile(BaseModel, extra="allow"):
     email: str
     full_name: str
@@ -26,7 +30,6 @@ class ResumeProfile(BaseModel, extra="allow"):
     contact: str
     experience: str
 
-# In-memory databases
 users_db = []
 profiles_db = [
     {
@@ -65,6 +68,12 @@ def register_user(user: UserRegister):
 def login_user(user: UserRegister):
     return {"status": "success", "message": f"Welcome back, {user.email}!", "role": user.role}
 
+@app.post("/api/admin/login")
+def admin_login(data: AdminLogin):
+    if data.email.strip().lower() == "ambaliguat25@gmail.com" and data.password == "mark2026admin":
+        return {"status": "success", "message": "Admin access granted!"}
+    return {"status": "error", "message": "Access Denied! Sayop ang email o password."}
+
 @app.get("/api/employer/profiles")
 def get_employer_profiles():
     return profiles_db
@@ -89,4 +98,4 @@ def ai_auto_apply(data: dict):
 
 @app.get("/api/admin/stats")
 def admin_stats():
-    return {"estimated_ad_revenue_usd": 280.00, "active_screen_users": 82}
+    return {"estimated_ad_revenue_usd": 310.50, "active_screen_users": 94}
