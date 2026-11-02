@@ -33,7 +33,7 @@
                 <a href="#" class="hover:text-indigo-400">Home</a>
                 <a href="#feed" class="hover:text-indigo-400">Job Feed</a>
                 <button type="button" onclick="openSeekerModal()" class="text-indigo-300 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-user mr-1"></i> Seeker Portal</button>
-                <button type="button" onclick="openEmployerModal()" class="text-emerald-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-user-tie mr-1"></i> Employer Portal & Register</button>
+                <button type="button" onclick="openEmployerModal()" class="text-emerald-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-user-tie mr-1"></i> Employer Dashboard & Portal</button>
                 <button type="button" onclick="openAdminModal()" class="text-amber-400 hover:underline font-bold cursor-pointer"><i class="fa-solid fa-lock mr-1"></i> Admin Dashboard</button>
                 <button type="button" onclick="toggleDarkMode()" class="bg-slate-800 p-2 rounded-xl text-yellow-400 hover:bg-slate-700 transition cursor-pointer">
                     <i id="darkModeIcon" class="fa-solid fa-moon"></i>
@@ -184,44 +184,52 @@
         </div>
     </div>
 
-    <!-- Employer Portal & Registration Form Modal (Naay Company Name, Details, ug Company Logo upload) -->
+    <!-- Employer Dashboard Modal (Naay Add/Delete Hiring Posts ug View-Only Profiles) -->
     <div id="employerModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-6 space-y-5 shadow-xl border dark:border-slate-800 max-h-[85vh] overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-3xl w-full p-6 space-y-5 shadow-xl border dark:border-slate-800 max-h-[85vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b dark:border-slate-800 pb-3">
-                <h3 class="font-bold text-lg text-slate-900 dark:text-white"><i class="fa-solid fa-user-tie text-emerald-500 mr-2"></i> Employer / Agency Portal & Registration</h3>
+                <h3 class="font-bold text-lg text-slate-900 dark:text-white"><i class="fa-solid fa-user-tie text-emerald-500 mr-2"></i> Employer Dashboard & Portal</h3>
                 <button type="button" onclick="closeEmployerModal()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             
             <div class="space-y-6">
-                <!-- Registration Form para sa Employer -->
+                <!-- Add New Hiring Post Form para sa Employer -->
                 <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border space-y-3">
-                    <h4 class="font-bold text-sm text-indigo-600 dark:text-indigo-400"><i class="fa-solid fa-building mr-1"></i> Register New Company / Agency Profile</h4>
+                    <h4 class="font-bold text-sm text-indigo-600 dark:text-indigo-400"><i class="fa-solid fa-plus-circle mr-1"></i> Mag-add og Bag-ong Hiring Post</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                         <div>
-                            <label class="font-semibold">Company / Agency Name</label>
-                            <input type="text" id="empCompanyName" placeholder="e.g., Sorted Logistics NZ" class="w-full bg-white dark:bg-slate-900 p-2 rounded border mt-1">
+                            <label class="font-semibold">Company Name</label>
+                            <input type="text" id="newJobCompany" placeholder="Sorted Logistics" class="w-full bg-white dark:bg-slate-900 p-2 rounded border mt-1">
                         </div>
                         <div>
-                            <label class="font-semibold">Official Business Email</label>
-                            <input type="email" id="empEmail" placeholder="hr@company.com" class="w-full bg-white dark:bg-slate-900 p-2 rounded border mt-1">
+                            <label class="font-semibold">Job Title / Position</label>
+                            <input type="text" id="newJobTitle" placeholder="High Reach Forklift Operator" class="w-full bg-white dark:bg-slate-900 p-2 rounded border mt-1">
                         </div>
-                        <div class="md:col-span-2">
-                            <label class="font-semibold">Company Logo / Branding Image</label>
-                            <input type="file" id="empLogoInput" accept="image/*" class="w-full text-xs bg-white dark:bg-slate-900 p-2 rounded border mt-1">
+                        <div>
+                            <label class="font-semibold">Location</label>
+                            <input type="text" id="newJobLocation" placeholder="Christchurch, NZ" class="w-full bg-white dark:bg-slate-900 p-2 rounded border mt-1">
                         </div>
-                        <div class="md:col-span-2">
-                            <label class="font-semibold">Company Description & Hiring Details</label>
-                            <textarea id="empDetails" rows="2" placeholder="Describe your company and hiring requirements..." class="w-full bg-white dark:bg-slate-900 p-2 rounded border mt-1"></textarea>
+                        <div>
+                            <label class="font-semibold">Contact Email / Info</label>
+                            <input type="text" id="newJobContact" placeholder="hr@company.com" class="w-full bg-white dark:bg-slate-900 p-2 rounded border mt-1">
                         </div>
                     </div>
-                    <button type="button" onclick="registerEmployerAccount()" class="w-full bg-emerald-600 text-white text-xs font-bold py-2.5 rounded-lg hover:bg-emerald-700 transition cursor-pointer">Register Company & Open Portal</button>
+                    <button type="button" onclick="employerAddJobPost()" class="w-full bg-emerald-600 text-white text-xs font-bold py-2.5 rounded-lg hover:bg-emerald-700 transition cursor-pointer">Publish Hiring Post to Feed</button>
+                </div>
+
+                <!-- Employer Active Posts List (Naay Delete button) -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-sm text-slate-900 dark:text-white"><i class="fa-solid fa-list mr-1"></i> Imong mga Aktibong Hiring Posts (Pwedeng i-Delete)</h4>
+                    <div id="employerMyPostsList" class="space-y-2 max-h-40 overflow-y-auto">
+                        <p class="text-xs text-slate-400 italic">Wala pa ka'y na-add nga hiring post.</p>
+                    </div>
                 </div>
 
                 <!-- Secure View-Only Profiles List para sa Employers -->
-                <div class="space-y-3 pt-2 border-t dark:border-slate-800">
+                <div class="space-y-3 pt-4 border-t dark:border-slate-800">
                     <h4 class="font-bold text-sm text-slate-900 dark:text-white"><i class="fa-solid fa-eye text-emerald-500 mr-1"></i> View-Only Applicant Profiles (No Direct Download)</h4>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Mga rehistradong aplikante nga luwas nga makita sa mga lehitimong employer online.</p>
-                    <div id="employerProfilesContainer" class="space-y-3">
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Mga rehistradong aplikante nga luwas nga makita sa mga lehitimong employer online[cite: 7].</p>
+                    <div id="employerProfilesContainer" class="space-y-3 max-h-48 overflow-y-auto">
                         <p class="text-xs text-slate-500">Loading applicant profiles...</p>
                     </div>
                 </div>
@@ -272,7 +280,7 @@
         let adminOwnerEmail = "ambaliguat25@gmail.com";
         let globalJobsList = [];
         let savedAdminPortals = [];
-        let registeredEmployers = [];
+        let employerMyPosts = []; // Listahan sa gi-add nga posts sa employer
 
         function toggleDarkMode() {
             let htmlRoot = document.getElementById('htmlRoot');
@@ -297,6 +305,7 @@
         function openEmployerModal() {
             document.getElementById('employerModal').classList.remove('hidden');
             loadEmployerProfiles();
+            renderEmployerMyPosts();
         }
 
         function closeEmployerModal() {
@@ -323,42 +332,64 @@
             }
         }
 
-        async function registerEmployerAccount() {
-            let name = document.getElementById('empCompanyName').value;
-            let email = document.getElementById('empEmail').value;
-            let details = document.getElementById('empDetails').value;
+        function employerAddJobPost() {
+            let company = document.getElementById('newJobCompany').value.trim();
+            let title = document.getElementById('newJobTitle').value.trim();
+            let location = document.getElementById('newJobLocation').value.trim();
+            let contact = document.getElementById('newJobContact').value.trim();
 
-            if (!name || !email) {
-                alert('Palihug isulod ang pangalan sa kompanya ug email.');
+            if (!company || !title) {
+                alert('Palihug isulod ang Company Name ug Job Title.');
                 return;
             }
 
-            let newEmp = {
-                company_name: name,
-                email: email,
-                details: details || "Verified hiring company.",
-                date: new Date().toLocaleDateString()
-            };
-
-            registeredEmployers.push(newEmp);
-            
-            // I-add sab sa tibuok job feed isip sponsored/verified employer
-            globalJobsList.unshift({
+            let newJob = {
                 id: Date.now(),
-                company_name: name,
-                job_title: "Direct Employer Hiring Opening",
-                location: "Verified Employer Portal",
-                contact_info: email + " | " + details,
+                company_name: company,
+                job_title: title,
+                location: location || "Global / Remote",
+                contact_info: contact || "Employer Contact",
                 verified: true,
                 is_sponsored: true
-            });
+            };
 
+            employerMyPosts.push(newJob);
+            globalJobsList.unshift(newJob);
             renderJobs(globalJobsList);
-            alert('Tagumpay! Nakarehistro na ang imong kompanya ug na-post na sa plataporma.');
-            document.getElementById('empCompanyName').value = '';
-            document.getElementById('empEmail').value = '';
-            document.getElementById('empDetails').value = '';
-            loadEmployerProfiles();
+            renderEmployerMyPosts();
+
+            document.getElementById('newJobCompany').value = '';
+            document.getElementById('newJobTitle').value = '';
+            document.getElementById('newJobLocation').value = '';
+            document.getElementById('newJobContact').value = '';
+            alert('Tagumpay! Na-publish na ang imong hiring post sa feed.');
+        }
+
+        function deleteEmployerPost(jobId) {
+            employerMyPosts = employerMyPosts.filter(j => j.id !== jobId);
+            globalJobsList = globalJobsList.filter(j => j.id !== jobId);
+            renderJobs(globalJobsList);
+            renderEmployerMyPosts();
+            alert('Na-delete na ang hiring post.');
+        }
+
+        function renderEmployerMyPosts() {
+            let listContainer = document.getElementById('employerMyPostsList');
+            listContainer.innerHTML = '';
+            if (employerMyPosts.length === 0) {
+                listContainer.innerHTML = `<p class="text-xs text-slate-400 italic">Wala pa ka'y na-add nga hiring post.</p>`;
+                return;
+            }
+            employerMyPosts.forEach(job => {
+                listContainer.innerHTML += `
+                    <div class="bg-white dark:bg-slate-900 p-2.5 rounded-lg border text-xs flex justify-between items-center shadow-sm">
+                        <div>
+                            <strong>${job.company_name}</strong> - ${job.job_title} (${job.location})
+                        </div>
+                        <button type="button" onclick="deleteEmployerPost(${job.id})" class="bg-red-600 text-white px-2.5 py-1 rounded hover:bg-red-700 cursor-pointer">Delete</button>
+                    </div>
+                `;
+            });
         }
 
         async function loadEmployerProfiles() {
